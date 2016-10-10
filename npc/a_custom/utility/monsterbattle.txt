@@ -1,0 +1,54 @@
+-	script	PoringArmy	-1,{
+
+	unitwalk .poring1,154,283,"PoringArmy::OnSummon";
+	unitwalk .poring2,154,281,"PoringArmy::OnSummon";
+	unitwalk .poring3,154,279,"PoringArmy::OnSummon";
+	
+	OnSummon:
+	
+		monster "prontera",154,283,"Poring Soldier",1002,1;
+		monster "prontera",154,281,"Poring King",1002,1;
+		monster "prontera",154,279,"Poring Soldier",1002,1;
+	
+	OnInterIfInit:
+		set .poring1, getnpcid(0,"Poring#1");
+		set .poring2, getnpcid(0,"Poring#2");
+		set .poring3, getnpcid(0,"Poring#3");
+	end;
+	
+
+}
+
+//duplicates for Porings
+
+prontera,148,283,5	duplicate(PoringArmy)	Poring#1	1002
+prontera,148,281,5	duplicate(PoringArmy)	Poring#2	1002
+prontera,148,279,5	duplicate(PoringArmy)	Poring#3	1002
+
+-	script	DropsArmy	-1,{
+
+	unitwalk .drops1,155,283,"DropsArmy::OnSummon";
+	unitwalk .drops2,155,281,"DropsArmy::OnSummon";
+	unitwalk .drops3,155,279,"DropsArmy::OnSummon";
+	
+	OnSummon:
+
+	monster "prontera",155,283,"Drops Soldier",1113,1;
+	monster "prontera",155,281,"Drops King",1113,1;
+	monster "prontera",155,279,"Drops Soldier",1113,1;
+
+
+	OnInterIfInit:
+		set .drops1, getnpcid(0,"Drops#1");
+		set .drops2, getnpcid(0,"Drops#2");
+		set .drops3, getnpcid(0,"Drops#3");
+	end;
+
+
+}
+
+//duplicates for Drops
+
+prontera,163,283,5	duplicate(DropsArmy)	Drops#1	1113
+prontera,163,281,5	duplicate(DropsArmy)	Drops#2	1113
+prontera,163,279,5	duplicate(DropsArmy)	Drops#3	1113

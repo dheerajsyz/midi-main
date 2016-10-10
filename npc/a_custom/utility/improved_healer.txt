@@ -1,0 +1,49 @@
+// [ ==== rAthena =============================================== ]
+// [ = Healer NPC                                                 ]
+// [ ==== By: =================================================== ]
+// [ = Echoes                                                     ]
+// [ ==== Actual Version: ======================================= ]
+// [ = 1.0                                                        ]
+// [ ==== Description: ========================================== ]
+// [ = 0.1: Initial version.                                      ]
+// [ = 1.0: Release version.                                      ]
+// [ ==== Additional Comments: ================================== ]
+// [ = Has delay between click and the actual heal.               ]
+// [ ============================================================ ]
+-	script	ImprovedHealer#main	-1,{
+
+	.@i = .ZenyBase * BaseLevel;
+	.@j$ = "Heal cost is "+.@i+"z";
+
+	menu .@j$,-;
+
+	if(Zeny < .@i){
+		dispbottom "You don't have enough Zeny.";
+		message strcharinfo(0),"You require "+.@i+"z.";
+		end;
+	}	
+	if(Hp != MaxHp || Sp != MaxSp){
+		specialeffect 12;
+		sleep2 .HealCastTime;
+		specialeffect2 313;	
+		percentheal 100,100;	
+		emotion e_wasp;
+	}
+	set Zeny,Zeny-.@i;
+	end;
+
+OnInterIfInit:
+	.HealCastTime = 1000; //How long the NPC will delay on casting heal on a player. In milliseconds.
+	.ZenyBase = 50;
+	end;
+}
+// ----------------
+// -- Duplicates --
+// ----------------
+alberta,33,244,4	duplicate(ImprovedHealer#main)	Healer#alb	10173
+aldebaran,136,119,6	duplicate(ImprovedHealer#main)	Healer#ald	10173
+geffen,115,72,6	duplicate(ImprovedHealer#main)	Healer#gef	10173
+izlude,125,119,6	duplicate(ImprovedHealer#main)	Healer#izl	10173
+morocc,164,96,4	duplicate(ImprovedHealer#main)	Healer#moc	10173
+payon_mem,80,116,6	duplicate(ImprovedHealer#main)	Healer#pay	10173
+prontera,151,184,6	duplicate(ImprovedHealer#main)	Healer#prt	10173

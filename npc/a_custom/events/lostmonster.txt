@@ -1,0 +1,238 @@
+prontera,1,1,5	script	Save Me#portal	100,2,2,{
+OnTouch:
+	npctalk "Have you seen my pet somewhere here ?";
+	doevent "Lost Monster::OnPortalReach";
+	end;
+OnInit:
+	bindatcmd "lostmonster","Lost Monster::OnEventStart";
+	bindatcmd "where","Lost Monster::OnFindLocation";
+	end;
+}
+
+
+prontera,1,1,5	script	Lost Monster	111,{
+
+	deltimer "Lost Monster::OnPCLoadMapEvent";
+		
+	if( .status ){
+		mes "You came to save me ?";
+		
+		if( .saviour$ != "" ){
+			mes "But .. ^0055FF"+.saviour$+"^000000 is here to help me already.";
+		}else{
+			mes "But my parent told me not to trust someone easily....";
+			mes " ";
+			mes "^FF0000* unless you give me "+getitemname( .lure_list[ .item_index ] )+" *^000000";
+			if( select( "Alright, Take it..","Nope" ) == 1 )
+				if( countitem( .lure_list[ .item_index ] ) ){
+					delitem .lure_list[ .item_index ],1;
+					.saviour$ = strcharinfo(0);
+					npctalk "This is great ~";
+					close2;
+					npcspeed rand( 250,350 );
+					
+					getmapxy( .@npc_map2$,.@npc_x2,.@npc_y2,1,"Save Me#portal" );
+					viewpoint 1,.@npc_x2,.@npc_y2,1,0x00EEFF;
+					
+					freeloop(1);
+					while( .saviour$ != "" ){
+						npcspeed rand( 250,350 );
+						getmapxy( .@to_map$,.@to_x,.@to_y,0,.saviour$ );
+						npcwalkto .@to_x,.@to_y;
+						specialeffect2 386,AREA,.saviour$;
+						sleep2 3000;
+						//.@second++;
+						//if( .@second >= rand( 10,15 ) ){
+						//	.saviour$ = "";
+						//	npctalk "Please wait, I need more "+getitemname( .lure_list[ .item_index ] )+" for my stamina.";
+						//	break;
+						//}
+					}
+					freeloop(0);
+					viewpoint 2,.@npc_x2,.@npc_y2,1,0x00EEFF;
+					getmapxy( .@npc_map2$,.@npc_x2,.@npc_y2,1,strnpcinfo(0) );
+					viewpoint 1,.@npc_x2,.@npc_y2,1,0xFF0000;
+					npcstop;
+					end;
+					
+				}else{
+					close2;
+					npctalk "You're cheater...!! You dont have it..";
+				}
+		}
+	}else
+		npctalk "Why are you here ?";
+	close;
+
+	
+OnInit:
+	// mob list
+	setarray .mob_list[0],1002,1007,1009,1010,1011,1012,1013,1019,1031,1052,1063;
+	.mob_list_size = getarraysize( .mob_list );
+	// lure list
+	setarray .lure_list[0],507,508,509,510,511,512,513,514,515,516,517,518,519;
+	.lure_list_size = getarraysize( .lure_list );
+	
+	// map list + max coordinates
+	setarray .map_list$[0],
+		"moc_pryd01",
+		//"moc_pryd02",
+		//"moc_pryd05",
+		"in_sphinx1";
+		//"in_sphinx2",
+		//"in_sphinx4";
+	.map_list_size = getarraysize( .map_list$ );
+	//setarray .map_x[0],193,193,225,293,293,233;
+	setarray .map_x[0],193,293;
+	//setarray .map_y[0],193,193,225,293,293,233;
+	setarray .map_y[0],193,293;
+	
+	// event max duration
+	.minute = 30;
+	
+	// required min. distance between 2 npcs to win
+	.range = 5;
+	
+	// determine max range
+	while( .@i < .map_list_size ){
+		.npc_max_distance[ .@i ] = distance( 5,5,.map_x[.@i],.map_y[.@i] );
+		// debugmes ".map : "+.map_list$[.@i]+" | distance "+.npc_max_distance[.@i];
+		.@i++;
+	}
+	
+	.mob_npc_id[0] = getnpcid( 0,"Lost Monster" );
+	.mob_npc_id[1] = getnpcid( 0,"Save Me#portal" );
+	end;
+
+OnPCDieEvent:
+if( .status ){
+	if( strcharinfo(3) == .map_list$[ .map_index ] && strcharinfo(0) == .saviour$ ){
+		.saviour$ = rid2name( killerrid );
+		npctalk "I will follow "+.saviour$+" now.";
+	}
+}
+end;
+
+OnEventStart:
+if(getgmlevel() < 99){ end; }
+OnMinute00:
+if( .status ) end;
+	.status = 1;
+	hideoffnpc "Lost Monster";
+	hideoffnpc "Save Me#portal";
+	.saviour$ = "";
+	.item_index = rand( .lure_list_size );
+	.map_index = rand( .map_list_size );
+	setmapflag .map_list$[ .map_index ],mf_loadevent;
+	setmapflag .map_list$[ .map_index ],mf_pvp;
+	setmapflag .map_list$[ .map_index ],mf_noteleport;
+	.mob_index = rand( .mob_list_size );
+	setnpcdisplay( "Lost Monster",.mob_list[ .mob_index ] );
+	.npc_min_range = rand( 130,.npc_max_distance[ .map_index ] ); 
+	
+	mapwarp .map_list$[ .map_index ],"prontera",155,181;
+	// generate coordinate for both npc
+	callsub( setCoordinate,3,.npc_min_range );
+	
+	switch( .map_index ){
+	case 0:
+		announce "The "+getmonsterinfo( .mob_list[ .mob_index ],MOB_NAME )+" is lost inside the Pyramids",0;
+		sleep 1000;
+		announce "Lure: "+getitemname( .lure_list[ .item_index ] ),0; 
+		break;
+	case 1:
+		announce "The "+getmonsterinfo( .mob_list[ .mob_index ],MOB_NAME )+" is lost inside the Sphinx Dungeon.",0;
+		sleep 1000;
+		announce "Lure: "+getitemname( .lure_list[ .item_index ] ),0;
+		break;
+	}	
+	// pause event until event end
+	sleep ( .minute * 60000 );
+	
+	// check for winner
+	if( .winner$ != "" ){
+		mapannounce .map_list$[ .map_index ],"We got a Winner : "+.winner$,0;
+	}else{
+		announce "Nobody has saved the "+getmonsterinfo( .mob_list[ .mob_index ],MOB_NAME ),0;
+	}
+
+OnEventEnd:
+	.status = 0;
+	hideonnpc "Lost Monster";
+	hideonnpc "Save Me#portal";
+	removemapflag .map_list$[ .map_index ],mf_loadevent;
+	removemapflag .map_list$[ .map_index ],mf_pvp;
+	removemapflag .map_list$[ .map_index ],mf_noteleport;
+	end;
+
+OnPCLoadMapEvent:
+	deltimer "Lost Monster::OnPCLoadMapEvent";
+	if( strcharinfo(3) == .map_list$[ .map_index ] && .status ){
+		// mes "You'll need some ^FF0000"+getitemname( .lure_list[ .item_index ] )+"^000000 to lure "+getmonsterinfo( .mob_list[ .mob_index ],MOB_NAME )+" to follow you.";
+		dispbottom "You'll need some '"+getitemname( .lure_list[ .item_index ] )+"' to lure "+getmonsterinfo( .mob_list[ .mob_index ],MOB_NAME )+" to follow you.";
+		// addtimer 1000,strnpcinfo(0)+"::OnPCLoadMapEvent";
+		if( .saviour$ == strcharinfo(0) ){
+			.@npc_name$ = "Save Me#portal";
+		}else{
+			.@npc_name$ = "Lost Monster";
+		}
+		getmapxy( .@npc_map0$,.@npc_x0,.@npc_y0,1,.@npc_name$ );
+		getmapxy( .@npc_map2$,.@npc_x2,.@npc_y2,1,"Save Me#portal" );
+		viewpoint 1,.@npc_x0,.@npc_y0,1,0x00EEFF;
+		viewpoint 1,.@npc_x2,.@npc_y2,2,0xFF0000;
+	}
+	end;
+	
+OnFindLocation:
+		viewpoint 2,.@npc_x2,.@npc_y2,2,0xFF0000;
+		viewpoint 2,.@npc_x0,.@npc_y0,1,0x00EEFF;
+		getmapxy( .@npc_map0$,.@npc_x0,.@npc_y0,1,.@npc_name$ );
+		getmapxy( .@npc_map2$,.@npc_x2,.@npc_y2,1,"Save Me#portal" );
+		viewpoint 1,.@npc_x0,.@npc_y0,1,0x00EEFF;
+		viewpoint 1,.@npc_x2,.@npc_y2,2,0xFF0000;
+end;
+		
+
+setCoordinate:
+	.@getarg[0] = getarg(0);
+	.@getarg[1] = getarg(1);
+	
+	do{
+		.@x[0] = rand( .map_x[ .map_index ] );
+		.@y[0] = rand( .map_y[ .map_index ] );
+		.@x[1] = rand( .map_x[ .map_index ] );
+		.@y[1] = rand( .map_y[ .map_index ] );
+	}while( distance( .@x[0],.@y[0],.@x[1],.@y[1] ) < .@getarg[1] || 
+			!checkcell( .map_list$[ .map_index ],.@x[0],.@y[0],cell_chkpass ) ||
+			!checkcell( .map_list$[ .map_index ],.@x[1],.@y[1],cell_chkpass ) );
+	
+	// move npc to generated coordinate
+	if( .@getarg[0] & 1 ) unitwarp .mob_npc_id[0],.map_list$[ .map_index ],.@x[0],.@y[0];
+	if( .@getarg[0] & 2 ) unitwarp .mob_npc_id[1],.map_list$[ .map_index ],.@x[1],.@y[1];
+	
+	return;
+	
+OnPortalReach:
+	if( .status ){
+		getmapxy( .@npc_map1$,.@npc_x1,.@npc_y1,1,"Lost Monster" );
+		getmapxy( .@npc_map2$,.@npc_x2,.@npc_y2,1,"Save Me#portal" );
+		if( distance( .@npc_x1,.@npc_y1,.@npc_x2,.@npc_y2 ) > .range ){
+			announce "Where's the "+getmonsterinfo( .mob_list[ .mob_index ],MOB_NAME )+" ?",bc_self;
+		}else{
+			.saviour$ = "";
+			.winner$ = strcharinfo(0);
+			mes "You saved it.";
+			// reward here ....
+			// getitem 512,1;
+			// getitem 512,2;
+			// getitem 512,3;
+			
+			.status = 0;
+			awake strnpcinfo(0);
+			close2;
+			donpcevent strnpcinfo(0)+"::OnEventEnd";
+			end;
+		}
+	}
+	end;
+}

@@ -1,0 +1,258 @@
+// [ ==== rAthena =============================================== ]
+// [ = Newbie Area NPCs                                           ]
+// [ ==== By: =================================================== ]
+// [ = Echoes                                                     ]
+// [ ==== Actual Version: ======================================= ]
+// [ = 1.0                                                        ]
+// [ ==== Description: ========================================== ]
+// [ = 0.1: Initial version.                                      ]
+// [ = 1.0: Release version.                                      ]
+// [ ==== Additional Comments: ================================== ]
+// [ = Some quests for newcomers.                                 ]
+// [ = The rewards are Novice Ninja Suit, Main-Gauche, Slippers,  ]
+// [ = Hood and Guard buy killing Lunatics, Porings & Chonchons.  ]
+// [ ============================================================ ]
+
+// ---------------------------
+// -- Navigation Instructor --
+// ---------------------------
+nov_gar01,66,96,6	script	Moa	488,{
+/* Initial Configurations */
+	.npc$ = "[^00557fMoa^000000]";
+
+/* Script Core */
+	if(newbie_area_quest == 7){
+		cutin "squirrel_girl",2;
+		mes .npc$;
+		mes "Awesome, now you have completed all the tasks of the Novice Area!";
+		emotion e_grats;
+		close2;
+		cutin "",255;
+		end;
+	}		
+	if(newbie_area_quest > 1){
+		cutin "squirrel_girl",2;
+		mes .npc$;
+		mes "I see you are doing good.";
+		mes "Keep it up!";
+		emotion e_no1;
+		close2;
+		cutin "",255;
+		end;
+	}	
+	if(newbie_area_quest == 1){
+		cutin "squirrel_girl",2;
+		mes .npc$;
+		mes "Remember, find ^aa0000Moa^000000!";
+		viewpoint 1,65,29,1,0xaa0000;
+		emotion e_no1;
+		close2;
+		cutin "",255;
+		end;
+	}	
+	cutin "squirrel_girl",2;
+	mes .npc$;
+	mes "Welcome to ^00aaffMIDI City Ragnarök Online^000000!";
+	mes "I have a feeling you will like it here, hehe~!";
+	emotion e_ho;
+	next;
+	mes .npc$;
+	mes "Now, I have a task for you.";
+	mes "You have to look for my friend ^aa0000Chu Chu^000000";
+	next;
+	mes .npc$;
+	mes "I have marked her location on your mini map.";
+	viewpoint 1,65,29,1,0xaa0000;
+	mes "Be sure to find her!";
+	mes "Good luck!";
+	emotion e_no1;
+	set newbie_area_quest,1;
+	close2;
+	cutin "",255;
+	end;
+}
+
+// ------------------------
+// -- Monster Instructor --
+// ------------------------
+nov_gar01,65,29,2	script	Chu Chu	56,{
+/* Initial Configurations */
+	.npc$ = "[^00557fChu Chu^000000]";	//NPC NAME.
+	.MobID = 1002;	//PORING.
+	.KillAmount = 20;	//AMOUNT OF MOB TO KILL.
+
+/* Script Core */
+	if(newbie_area_quest == 7){
+		mes .npc$;
+		mes "Awesome, now you have completed all the tasks of the Novice Area!";
+		emotion e_grats;
+		close;
+	}		
+	if(newbie_area_quest == 3){
+		mes .npc$;
+		mes "Awesome job!";
+		mes "I think you are good now.";
+		mes "Time for you to go find ^aa0000Retoree^000000~";
+		mes "Good luck on your journey.";
+		emotion e_no1;
+		close;
+	}
+	if(newbie_area_quest == 2){
+OnMobQuestStart:
+		mes .npc$;
+		mes "Now, I need you to kill "+.KillAmount+" "+getmonsterinfo(.MobID,0)+".";
+		mes "Come back when you are ready.";
+		close;
+	}
+	if(newbie_area_quest == 1){
+		mes .npc$;
+		viewpoint 2,196,110,1,0xaa0000;
+		mes "Yay~! You found me!";
+		mes "Welcome to ^00aaffMIDI City Ragnarök Online^000000! But I'm sure my good old friend greeted you already.";
+		emotion e_heh;
+		next;
+		mes .npc$;
+		mes "Great job!";
+		emotion e_no1;
+		next;
+		getitem 2352,1;	//Tattered Novice Ninja Suit [0]
+		set newbie_area_quest,2;
+		set MobKilled,0;
+		goto OnMobQuestStart;
+		end;
+	}
+	mes .npc$;
+	mes "Weird, no one told me you would come.";
+	mes "You better come back after talking with ^00aaffMoa^000000!";
+	emotion e_ok;
+	close;
+
+OnNPCKillEvent:
+	if(newbie_area_quest == 2 && killedrid == .MobID && strcharinfo(3) == "nov_gar01" && MobKilled < .KillAmount){
+		MobKilled++;
+		message strcharinfo(0),"[ "+MobKilled+"/"+.KillAmount+" "+getmonsterinfo(.MobID,0)+" left. ]";
+		if(MobKilled == .KillAmount){
+			getitem 5055,1;	//Novice False Eggshell [0]
+			set newbie_area_quest,3;
+		}
+	}
+	end;
+}
+
+// -----------------------
+// -- Weapon Instructor --
+// -----------------------
+nov_gar01,128,31,6	script	Retoree	63,{
+/* Initial Configurations */
+	.npc$ = "[^00557fRetoree^000000]";	//NPC NAME.
+	.ModID = 1063;	//LUNATIC.
+	.KillAmount = 30;	//AMOUNT OF MOB TO KILL.
+
+/* Script Core */
+	if(newbie_area_quest == 7){
+		mes .npc$;
+		mes "Awesome, now you have completed all the tasks of the Novice Area!";
+		emotion e_grats;
+		close;
+	}	
+	if(newbie_area_quest > 4){
+		mes .npc$;
+		mes "Pretty nice job you did over there, it means you are ready to go forward and talk to ^00aaffCyan Hijirikawa^000000!";
+		mes "Good fortune on your journey!";
+		mes "She's just north of me~";
+		emotion e_no1;
+		close;
+	}		
+	if(newbie_area_quest == 4){
+		mes .npc$;
+		mes "I don't think you killed all the ^ff0000"+getmonsterinfo(.ModID,0)+"s^000000 yet.";
+		close;
+	}		
+	if(newbie_area_quest == 3){
+		mes .npc$;
+		mes "Hello and welcome to ^00aaffMIDI City Ragnarök Online^000000, I hope your stay in this world will be enjoyable!";
+		emotion e_no1;
+		next;
+		mes .npc$;
+		mes "You will have to kill "+.KillAmount+" "+getmonsterinfo(.ModID,0)+" now, so be prepared to fight unbearablely cute little monsters!";
+		emotion e_heh;
+		set MobKilled,0;
+		set newbie_area_quest,4;
+		next;
+		mes .npc$;
+		mes "Good luck.";
+		emotion e_no1;
+		close;
+	}
+	mes .npc$;
+	mes "Hey, don't you think you are a bit too early around here?";
+	mes "You should go back and be sure to do all the task my bandmates give to you~";
+	emotion e_ok;
+	close;
+
+OnNPCKillEvent:
+	if(newbie_area_quest == 4 && killedrid == .ModID && strcharinfo(3) == "nov_gar01" && MobKilled < .KillAmount){
+		MobKilled++;
+		message strcharinfo(0),"[ "+MobKilled+"/"+.KillAmount+" "+getmonsterinfo(.ModID,0)+" left. ]";
+		if(MobKilled == .KillAmount){
+			getitem 1243,1;	//Novice Main-Gauche [0]
+			set newbie_area_quest,5;
+		}
+	}
+	end;
+}
+
+// ----------------------
+// -- Armor Instructor --
+// ----------------------
+nov_gar01,133,94,4	script	Cyan Hijirikawa	430,{
+/* Initial Configurations */
+	.npc$ = "[^00557fCyan Hijirikawa^000000]";	//NPC NAME.
+	.MobID = 1011;	//CHONCHON.
+	.KillAmount = 50;	//AMOUNT OF MOB TO KILL.
+
+/* Script Core */
+	if(newbie_area_quest == 7){
+		mes .npc$;
+		mes "Awesome, now you have completed all the tasks of the Novice Area!";
+		mes "Now, please step inside the portal to proceed to our Panoramic Cherry Blossom Field~";
+		emotion e_grats;
+		close;
+	}	
+	if(newbie_area_quest == 6){
+		mes .npc$;
+		mes "Be sure to kill all those "+getmonsterinfo(.MobID,0)+"s!";
+		emotion e_gasp;
+		close;
+	}		
+	if(newbie_area_quest == 5){
+		mes .npc$;
+		mes "A new face! It is awesome to see newcomers to come here and ask for their last task~";
+		emotion e_sob;
+		next;
+		mes .npc$;
+		mes "As your last task I will request you to kill "+.KillAmount+" "+getmonsterinfo(.MobID,0)+"s.";
+		mes "Be sure to come back when you are ready!";
+		set newbie_area_quest,6;
+		set MobKilled,0;
+		emotion e_ok;
+		close;
+	}
+	mes .npc$;
+	mes "Hello newcomer! I see you haven't talked to my colleagues yet, you better go and see them first!";
+	emotion e_no1;
+	close;
+
+OnNPCKillEvent:
+	if(newbie_area_quest == 6 && killedrid == .MobID && strcharinfo(3) == "nov_gar01" && MobKilled < .KillAmount){
+		MobKilled++;
+		message strcharinfo(0),"[ "+MobKilled+"/"+.KillAmount+" "+getmonsterinfo(.MobID,0)+" left. ]";
+		if(MobKilled == .KillAmount){
+			getitem 2112,1;	//Novice Guard [0]
+			getitem 2414,1;	//Novice Slippers [0]
+			getitem 2510,1;	//Somber Novice Hood [0]
+			set newbie_area_quest,7;
+		}
+	}
+	end;
+}

@@ -1,0 +1,18 @@
+bat_room,160,150,4	script	Battleground Shop	811,{
+	mes "[ ^9d3ad3 Valkyrie ^000000 ]";
+	mes "Do you want to warp to the shops?";
+	menu "Yes",-;
+	close2;
+	warp "auction_01",21,48;
+	end;
+}
+
+auction_01,21,42,4	script	Battlegrounds	811,{
+	mes "[ ^9d3ad3 Valkyrie ^000000 ]";
+	mes "Do you want to leave?";
+	menu "Yes",-;
+	close2;
+	warp "bat_room",153,149;
+	end;
+}
+

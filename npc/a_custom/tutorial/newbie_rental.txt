@@ -1,0 +1,56 @@
+didymos1,103,103,5	script	Animal Handler#quest	505,{
+
+	if(animal_done == 1) goto OnRentalOption;
+
+	mes .name$;
+	mes "Welcome to ^9d3ad3Aiora^000000.";
+	mes "It seems you are new to adventuring in this world.";
+	menu "I am, is there anything you can teach me?",-;
+	next;
+	mes .name$;
+	mes "Hmm, I suppose I can share a little with you.";
+	mes "I am known as the ^ff0000Animal Handler^000000";
+	mes "Those who become a ^ff0000Knight^000000 or ^ff0000Crusader^000000 can get their mounts from me.";
+	mes "Adventurers who become ^ff0000Hunters^000000 can also take their falcon from me.";
+	next;
+	mes .name$;
+	mes "Since I really do not like to walk around, I just stay at one place.";
+	mes "If you need my help on the world below, you can easily spot me on ^ff0000Payon^000000";
+	next;
+	mes .name$;
+	mes "Here's a little exp for the trouble of listening to me.";
+	
+		getexp .quest_bexp,.quest_jexp;
+		set animal_done,1;
+		setquest 80006,getcharid(0);
+		completequest 80006,getcharid(0);
+		
+	mes "Talk to everyone okay?";
+	close2;
+
+	cutin "",255;
+
+	end;
+	
+OnRentalOption:
+
+	mes .name$;
+	mes "Hello "+strcharinfo(0)+", do you need something?";
+	mes "As I have mentioned before, I can not rent you my animals just yet.";
+	mes "I'm sorry.";
+	close;
+	
+	end;
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	set .name$,"[ ^9d3ad3 Animal Handler ^000000 ]";
+	
+	questinfo 80006,1,2;
+	
+end;
+
+}

@@ -1,0 +1,43 @@
+-	script	PartyDungeon	-1,{
+
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+	
+	mes "[ ^0000FFHell's Gate Guardian^000000 ]";
+	mes "This is the entrance to ^0000FFHell's Gate^000000";
+	next;
+	
+	if ( !hellgate ){
+		mes "[ ^0000FFHell's Gate Guardian^000000 ]";
+		mes "You haven't proved to us that you are strong enough";
+		mes "to battle these hell-spawned demons.";
+		mes "Come back when you do so.";
+		close;
+	}
+	if ( $@partymembercount < .party ) {
+		mes "[ ^0000FFHell's Gate Guardian^000000 ]";
+		mes "Party members required: ^FF0000"+.party+"^000000";
+		mes "Current Party members: ^FF0000"+$@partymembercount+"^000000";
+		next;
+		mes "[ ^0000FFHell's Gate Guardian^000000 ]";
+		mes "Gather enough members before you can enter.";
+		close;
+	}
+	
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+	
+	if ( .@count_online != $@partymembercount ) {
+		mes "[ ^0000FFHell's Gate Guardian^000000 ]";
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	warp "thor_v03",40,265;
+	end;
+
+OnInit:
+	set .party,5; //number of party members required
+end;
+}

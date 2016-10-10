@@ -1,0 +1,48 @@
+-	script	JobHelper#1	-1,{
+
+OnJobChange:
+	if(Class == 0){
+		dispbottom "Novices are not allowed to use this service.";
+		end;
+	}
+	if(JobLevel < 40){ 
+		dispbottom "You need to be at least Job 40 to jobchange";		
+		end;
+	}
+	if(Zeny < 50000){
+		dispbottom "You need 50,000z for this service.";
+		end;
+	}
+	.@class = Class;
+	if(.@class == 1) set .@menu$,"Knight";
+	if(.@class == 2) set .@menu$,"Wizard";
+	if(.@class == 3) set .@menu$,"Hunter";
+	if(.@class == 4) set .@menu$,"Priest";
+	if(.@class == 5) set .@menu$,"Blacksmith";
+	if(.@class == 6) set .@menu$,"Assassin";
+	
+	menu .@menu$,-;
+
+	switch(.@class){
+		case 1: warp "prontera",50,341; break;
+		case 2: warp "geffen",120,101; break;
+		case 3: warp "pay_fild10",144,249; break;
+		case 4: warp "moc_fild16",205,289; break;
+		case 5: warp "geffen",178,63; break;
+		case 6: warp "prontera",233,313; break;
+		default:
+			dispbottom "You can not jobchange anymore.";
+			end;
+	}
+	Zeny -= .zeny;
+end;
+OnInit:
+	bindatcmd "jobchange",strnpcinfo(3)+"::OnJobChange";
+	.zeny = 50000;
+end;
+
+}
+
+miku_stage,50,62,0	script	screen	3998,{
+	end;
+}

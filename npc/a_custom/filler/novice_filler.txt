@@ -1,0 +1,135 @@
+-	script	FillerNPCs#novice	-1,{
+
+	mes "[ ^9d3ad3Adventurer^000000 ]";
+
+	.@rand = rand(1,10);
+	
+	switch(.@rand){
+	
+		case 1:
+			mes "Have you finished all the quests in this area?";
+			mes "Be sure to the ^ff0000Plasmagica^000000 members around.";
+			break;
+		case 2:
+			mes "All these ^ff0000monsters^000000 respawn after some time.";
+			mes "So you can get some ^ff0000EXP^000000 from them.";
+			mes "But if you want to be stronger faster, you should aim for more stronger monsters.";
+			break;
+		case 3:
+			mes "I aspire to be a ^ff0000Swordsman^000000";
+			mes "I mean, being able to wield One-Handed Swords";
+			mes "or Two-Handed Swords is so cool right?!";
+			break;
+		case 5:
+			mes "Oh my~, you noticed me?";
+			mes "Well, I was practicing my ^ff0000Hide^000000 skill.";
+			mes "I wish to be a ^ff0000Thief^000000 you know.";
+			break;
+		case 6:
+			mes "HEAL !!";
+			mes "Oh crap, I messed that up, I'm sorry.";
+			mes "Did you know that ^ff0000Acoyltes^000000 can heal others?";
+			break;
+		case 7:
+			mes "Jellopy! Jellopy for 1 Zeny!";
+			mes "Oh I wish I can ^ff0000Vend^000000 already.";
+			mes "Merchants can sell stuff and earn zeny with shops~";
+			break;
+		case 8:
+			mes "I like to hit targets from afar.";
+			mes "Which is why I will be an ^ff0000Archer^000000";
+			mes "Fast attack speed and range attacks, nothing can beat that!";
+			break;
+		case 9:
+			mes ".....";
+			mes "[ You poke the person ]";
+			mes "OMG WTH?! You just cancelled my casting!";
+			mes "Mages need intensive concentration, so they take hits, it will cancel their cast.";
+			break;
+		case 10:
+			mes "I just want to be a novice forever~";
+			break;
+	
+	}
+	
+	close;
+
+}
+
+-	script	FillerNPCs#cherry	-1,{
+
+	mes "[ ^9d3ad3Adventurer^000000 ]";
+
+	.@rand = rand(1,10);
+	
+	switch(.@rand){
+	
+		case 1:
+			mes "It seems like this is it. Are you prepared as well?";
+			break;
+		case 2:
+			mes "I finally passed the last test!";
+			mes "I'm on my way to becoming the top adventurer!";
+			break;
+		case 3:
+			mes "Phew, fighting all those Porings made me tired.";
+			mes "I wish I had juices with me.";
+			break;
+		case 5:
+			mes "The training grounds really made us stronger.";
+			mes "But I wonder if there are any other stronger monsters out there.";
+			break;
+		case 6:
+			mes "I wish to visit Payon.";
+			mes "I heard it's the Town with the most activity after all.";
+			break;
+		case 7:
+			mes "Did you know that Alberta is the Merchant City?";
+			mes "I heard they declared that ^ff0000Vending^000000 is only allowed there.";
+			break;
+		case 8:
+			mes "Oh bummer, I forgot to get my Zeny from the Banker!";
+			mes "Now I have to travel to Payon to get more Zeny.";
+			break;
+		case 9:
+			mes "Choose your class carefully, you'll be sticking to it forever.";
+			break;
+		case 10:
+			mes "I wish I could fly.";
+			break;
+	
+	}
+	
+	close;
+
+}
+
+
+//duplicates
+
+nov_gar01,101,85,5	duplicate(FillerNPCs#novice)	Adventurer#1	62
+nov_gar01,115,55,5	duplicate(FillerNPCs#novice)	Adventurer#2	72
+nov_gar01,128,67,5	duplicate(FillerNPCs#novice)	Adventurer#3	84
+nov_gar01,78,59,5	duplicate(FillerNPCs#novice)	Adventurer#4	92
+nov_gar01,116,99,5	duplicate(FillerNPCs#novice)	Adventurer#5	93
+
+chry_fld,116,126,5	duplicate(FillerNPCs#cherry)	Adventurer#6	73
+chry_fld,100,119,5	duplicate(FillerNPCs#cherry)	Adventurer#7	48
+chry_fld,88,105,5	duplicate(FillerNPCs#cherry)	Adventurer#8	51
+chry_fld,58,80,5	duplicate(FillerNPCs#cherry)	Adventurer#9	891
+chry_fld,138,55,5	duplicate(FillerNPCs#cherry)	Adventurer#10	896
+
+//mobs
+//Novice Garden Mobs
+
+nov_gar01,0,0,0,0	monster	Poring	1002,20,0,0,0
+nov_gar01,0,0,0,0	monster	Chon Chon	1011,12,0,0,0
+nov_gar01,0,0,0,0	monster	Lunatic	1063,12,0,0,0
+nov_gar01,0,0,0,0	monster	Fabre	1007,8,0,0,0
+
+//Cherry Blossom Field Mobs
+
+chry_fld,0,0,0,0	monster	Thief Bug	1051,15,0,0,0
+chry_fld,0,0,0,0	monster	Picky	1049,20,0,0,0
+chry_fld,0,0,0,0	monster	Poporing	1031,10,0,0,0
+chry_fld,0,0,0,0	monster	Willow	1010,15,0,0,0

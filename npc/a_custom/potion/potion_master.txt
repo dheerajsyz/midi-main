@@ -1,0 +1,89 @@
+-	script	Potion Master	-1,{
+	mes "[ ^9d3ad3 Potion Master ^000000 ]";
+	mes "Formula: Potion Making";
+	mes "^FF00002 Red Herb^000000 + ^FF00001 Empty Bottle^000000";
+	mes "^FF00002 Yellow Herb^000000 + ^FF00001 Empty Bottle^000000";
+	mes "^FF00002 White Herb + ^FF00001 Empty Bottle^000000";
+	next;
+	switch(select("Upgraded Red Potion:Upgraded Yellow Potion:Upgraded White Potion")){
+		case 1:
+			callsub MakePot,507,2,713,1;
+			break;
+		case 2:
+			callsub MakePot,508,2,713,1;
+			break;
+		case 3:
+			callsub MakePot,509,2,713,1;
+			break;
+			
+	}
+	
+MakePot:
+	.@herb_id = getarg(0);
+	.@herb_req = getarg(1);
+	.@bottle_id = getarg(2);
+	.@bottle_req = getarg(3);
+	
+	switch(.@herb_id){
+		case 507:
+			set .@potion,501;
+			break;
+		case 508:
+			set .@potion,503;
+			break;
+		case 509:
+			set .@potion,504;
+			break;
+	}
+			if(countitem(.@herb_id) < .@herb_req || countitem(.@bottle_id) < .@bottle_req){ mes "[ Potion Master ]"; mes "Not enough ingredients."; close; end; }
+			set .@herb,countitem(.@herb_id) / 2;
+			set .@bottle,countitem(.@bottle_id);
+			set .@make,.@bottle / .@herb;
+			mes "[ Potion Master ]";
+			mes "You can make "+.@make+" "+getitemname(.@potion)+".";
+			mes "How many do you want?";
+			input .@total;
+			if(.@total == 0){ end; }
+			if(.@total > (countitem(.@herb_id) / .@herb_req) || .@total > countitem(.@bottle_id)){ mes "You don't have enough ingredients."; close; end; }
+			set .@rand,rand(0,100);
+			if(.@rand < 10){ //Critical Brew
+				getitem .@potion,.@total*2;
+				delitem .@herb_id,.@total*2;
+				delitem .@bottle_id,.@total;
+				specialeffect2 305,AREA;
+				specialeffect2 381,AREA;
+				mes "Wow! I managed to create extra potions!";
+				mes "Here, take twice the amount.";
+				close;
+				end;
+			}
+			else if(.@rand <= 20 && .@rand >= 10){ //Failed Brew
+				getitem .@potion,.@total/2;
+				delitem .@herb_id,.@total*2;
+				delitem .@bottle_id,.@total;
+				specialeffect2 306,AREA;
+				mes "OMG! Something went wrong!";
+				mes "I only managed to make half of the potions.";
+				mes "Here take them anyways.";
+				close;
+			}
+			else //Normal Brew
+			specialeffect2 305,AREA;
+			getitem .@potion,.@total;
+			delitem .@herb_id,.@total*2;
+			delitem .@bottle_id,.@total;
+			mes "I've brewed you your potions.";
+			close;
+			end;
+		}
+
+sec_in02,166,183,4	duplicate(Potion Master)	Potion Master#vip	667
+izlude,123,82,4	duplicate(Potion Master)	Potion Master#izl	667
+prontera,165,71,4	duplicate(Potion Master)	Potion Master#prt	667
+prontera,42,194,4	duplicate(Potion Master)	Potion Master#prt2	667
+prontera,164,302,4	duplicate(Potion Master)	Potion Master#prt3	667
+prontera,261,216,4	duplicate(Potion Master)	Potion Master#prt4	667
+morocc,148,85,4	duplicate(Potion Master)	Potion Master#moc	667
+geffen,100,55,4	duplicate(Potion Master)	Potion Master#gef	667
+geffen,182,127,4	duplicate(Potion Master)	Potion Master#gef2	667
+payon_mem,99,124,4	duplicate(Potion Master)	Potion Master#pay	667

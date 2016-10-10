@@ -1,0 +1,967 @@
+// -----------------------------------------------------------------------//
+// Panda Script Collections												  //
+// OnMVPDead - Use together with Boss Spawn Script						  //
+// -----------------------------------------------------------------------//
+// By PandaLovesHamster													  //
+// -----------------------------------------------------------------------//
+// Changelog:															  //
+// v1.0 - Initial Release												  //
+// -----------------------------------------------------------------------//
+// For more additional stuff, let me know								  //
+// -----------------------------------------------------------------------//
+// Instructions:														  //
+//how to add:															  //
+//make sure you put the npc script on where the map						  //
+//the boss monster will spawn											  //
+//after which, just copy and paste the codes below, you don't have to	  //
+//change anything, it will automatically fill the variables on its own	  //
+//note;																	  //
+//you can change the bonus items given if you kill a boss, refer to:	  //
+//.items[0] to change it											  	  //
+// -----------------------------------------------------------------------//
+
+
+ama_dun03,1,1,0	script	Samurai Specter#boss	123,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+anthell01,1,1,0	script	Phreeoni#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+anthell02,1,1,0	script	Maya#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+gef_fild14,1,1,0	script	Orc Hero#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+gl_chyard,1,1,0	script	Dark Lord#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+prt_maze03,1,1,0	script	Baphomet#boss2	-1,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+gl_cas02,1,1,0	script	Baphomet#boss1	-1,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+gon_dun03,1,1,0	script	Dark Snake Lord#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+gef_dun03,1,1,0	script	Dracula#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+in_sphinx5,1,1,0	script	Pharaoh#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+mjolnir_05,1,1,0	script	Mistress#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+moc_pryd04,1,1,0	script	Osiris#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+moc_pryd06,1,1,0	script	Amon Ra#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+orcsdun02,1,1,0	script	Orc Lord#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+pay_fild10,1,1,0	script	Eddga#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+prt_sewb4,1,1,0	script	Golden Thief Bug#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+}
+
+xmas_fild01,1,1,0	script	Garm#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+}
+
+niflheim,1,1,0	script	Lord of the Dead#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+pay_dun04,1,1,0	script	Moonlight Flower#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+treasure02,1,1,0	script	Drake#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+xmas_dun02,1,1,0	script	Stormy Knight#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+
+}
+
+tur_dun04,1,1,0	script	Turtle General#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+yuno_fild02,1,1,0	script	Archangeling#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}
+
+gef_dun02,1,1,0	script	Doppelganger#boss	111,{
+
+OnMVPDead:
+	set .@GID,getcharid(2);
+	set .@rand,rand(1,5);
+	set .@map$,strcharinfo(3);
+	removemapflag .@map$,mf_pvp;
+	removemapflag .@map$,mf_loadevent;
+	announce strcharinfo(0)+" from the [ "+ getguildName(.@GID) +" ] guild has killed "+strnpcinfo(1)+" in "+.@map$,0;
+	set #MVPPoints,#MVPPoints +.@rand;
+	message strcharinfo(0),"You gained "+.@rand+" MVP Points";
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from "+strnpcinfo(1)+".",0;
+				}
+			}
+	initnpctimer;
+	end;
+OnTimer3300000:
+	announce strnpcinfo(1)+" will spawn in "+.@map$+" in 5 minutes.",0;
+	end;
+OnTimer3600000:
+	stopnpctimer;
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	setmapflag .@map$,mf_pvp;
+	setmapflag .@map$,mf_loadevent;
+end;
+
+OnInit:
+	set .@map$,strnpcinfo(4);
+	killmonster .@map$,strnpcinfo(0)+"::OnMVPDead";
+	// <item id>,<amount>,<chance>
+	setarray .items[0],674,1,10
+					  ,30030,1,10;
+end;
+
+}

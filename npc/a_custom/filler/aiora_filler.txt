@@ -1,0 +1,306 @@
+-	script	AioraGuard#main	-1,{
+
+	mes "[ ^9d3ad3Aiora Guardian^000000 ]";
+	
+	set .@rand,rand(1,5);
+	
+	switch(.@rand){
+	
+		case 1:
+			
+			mes "The ^ff0000Queen^000000 is just up ahead.";
+			mes "Please mind your manners.";
+			break;
+			
+		case 2:
+		
+			mes "We are the ^ff0000Peace Keepers^000000 of this place.";
+			mes "If you do not wish divine retribution, pay homage to the Queen.";
+			break;
+		
+		case 3:
+		
+			mes "Welcome to the city of ^ff0000Aiora^000000";
+			mes "May the wisdom of the Great Queen be with you.";
+			break;
+		
+		case 4:
+		
+			mes "We have safe guarded this place for a long time.";
+			mes "And we will continue to do so for ages to come.";
+			break;
+		
+		case 5:
+		
+			mes "We are from the High Order of the Valkyria";
+			mes "We were tasked to safegurd this place, and will continue to do so.";
+			break;
+	
+	}
+	
+	close;
+	
+	end;
+}
+
+didymos1,191,156,5	duplicate(AioraGuard#main)	Aiora Guardian#1	811
+didymos1,204,156,5	duplicate(AioraGuard#main)	Aiora Guardian#2	811
+didymos1,182,232,5	duplicate(AioraGuard#main)	Aiora Guardian#3	811
+didymos1,191,232,5	duplicate(AioraGuard#main)	Aiora Guardian#4	811
+didymos1,203,232,5	duplicate(AioraGuard#main)	Aiora Guardian#5	811
+didymos1,213,232,5	duplicate(AioraGuard#main)	Aiora Guardian#6	811
+didymos1,191,250,5	duplicate(AioraGuard#main)	Aiora Guardian#7	811
+didymos1,204,250,5	duplicate(AioraGuard#main)	Aiora Guardian#8	811
+
+-	script	AioraCitizen#main	-1,{
+
+	mes "[ ^9d3ad3Aiora Citizen^000000 ]";
+
+	set .@rand,rand(1,10);
+	
+	switch(.@rand){
+	
+		case 1:
+			mes "The people you see here are originally from ^ff0000Midgard^000000";
+			mes "However, since chaos has taken hold of that world, we have come here to take refuge.";
+			break;
+		case 2:
+			mes "This is my first time to be in such a place.";
+			mes "Just being here makes me feel so safe and secure.";
+			break;
+		case 3:
+			mes "Those damned idiots over at ^ff0000Midgard^000000";
+			mes "If they didn't let ^ff0000Baphomet^000000 run rampant, I didn't need to take shelter here.";
+			break;
+		case 4:
+			mes "Will you be the one who will cleanse ^ff0000Midgard^000000 of ^ff00000corruption^000000?";
+			mes "If you are the one, I wish you luck on your journey.";
+			break;
+		case 5:
+			mes "We've stayed in this place for quite some time already.";
+			mes "I still can't believe that Valkyries actually do exist.";
+			break;
+		case 6:
+			mes "Will you be heading down to ^ff0000Midgard^000000?";
+			mes "If so, please save the people who are still there.";
+			break;
+		case 7:
+			mes "Books have always mentioned that a heavenly city in the clouds was real.";
+			mes "I never believed it only up until I actually managed to get here.";
+			break;
+		case 8:
+			mes "The ^ff0000Queen^000000 has been very generous.";
+			mes "We can only contribute so little to the city, but she still allowed us to stay.";
+			break;
+		case 9:
+			mes "I got seperated from my family.";
+			mes "I hope they are alright, wherever they might be.";
+			break;
+		case 10:
+			mes "This city is mesmerizing!";
+			mes "I mean seriously, where can you see them trees floating, eh?";
+			mes "I guess as long as the creator wills it, it will happen. Just look at those trees.";
+			break;
+	
+	}
+	
+	close;
+	
+	end;
+
+}
+
+didymos1,168,125,5	duplicate(AioraCitizen#main)	Aiora Citizen#1	90
+didymos1,162,105,5	duplicate(AioraCitizen#main)	Aiora Citizen#2	91
+didymos1,180,100,5	duplicate(AioraCitizen#main)	Aiora Citizen#3	93
+didymos1,193,121,5	duplicate(AioraCitizen#main)	Aiora Citizen#4	92
+didymos1,215,100,5	duplicate(AioraCitizen#main)	Aiora Citizen#5	86
+didymos1,227,105,5	duplicate(AioraCitizen#main)	Aiora Citizen#6	99
+didymos1,215,100,5	duplicate(AioraCitizen#main)	Aiora Citizen#7	405
+didymos1,233,128,5	duplicate(AioraCitizen#main)	Aiora Citizen#8	558
+didymos1,228,134,5	duplicate(AioraCitizen#main)	Aiora Citizen#9	665
+didymos1,301,91,5	duplicate(AioraCitizen#main)	Aiora Citizen#10	667
+didymos1,311,161,5	duplicate(AioraCitizen#main)	Aiora Citizen#11	798
+didymos1,279,123,5	duplicate(AioraCitizen#main)	Aiora Citizen#12	804
+didymos1,283,88,5	duplicate(AioraCitizen#main)	Aiora Citizen#13	846
+didymos1,199,86,5	duplicate(AioraCitizen#main)	Aiora Citizen#14	882
+didymos1,215,147,5	duplicate(AioraCitizen#main)	Aiora Citizen#15	877
+
+didymos1,198,264,5	script	Aiora Queen#main	640,{
+	
+	for(set .@i,80000; .@i < 80008; .@i++){
+	
+		if(checkquest(.@i) != 2){
+			set .@lacking,1;
+			break;
+		}
+	
+	}
+	
+	if(.@lacking){
+		mes "[ ^9d3ad3Aiora Queen^000000 ]";
+		mes "It seems you are still not ready to receive my blessing.";
+		mes "Please roam around the city and acquire as much knowledge as you can.";
+		close;
+		end;
+	}
+
+	mes "[ ^9d3ad3Aiora Queen^000000 ]";
+	mes "I am the ^ff0000Queen of Aiora^000000.";
+	mes "As you already know, you will be sent back to ^ff0000Midgard^000000,";
+	mes "and it seems that you are prepared for what is ahead.";
+	next;
+	mes "[ ^9d3ad3Aiora Queen^000000 ]";
+	mes "The trials ahead will be daunting, are you ready to face your destiny?";
+	menu "Yes, I am ready",-,"Please let me stay for awhile.",OnStay;
+	next;
+	mes "[ ^9d3ad3Aiora Queen^000000 ]";
+	mes "I will now send you to the preparatory field.";
+	mes "^ff0000Instructors^000000 will be present there to further nourish your growth.";
+	mes "They will also be providing you with the necessary equipment to start your journey.";
+	mes "Farewell adventurer, until we meet again.";
+	close2;
+		savepoint "nov_gar01",70,92;
+		warp "nov_gar01",70,92;
+	end;
+	
+OnStay:
+	next;
+	mes "[ ^9d3ad3Aiora Queen^000000 ]";
+	mes "So be it, come whenever you feel like leaving.";
+	close;
+	end;
+
+OnInit:
+	questinfo 81001,1,2;
+end;
+	
+}
+
+chry_fld,114,49,5	script	Treasure Box#chry	10005,{
+	if(!got_freebies){
+		getitembound 12211,3,1;
+		getitembound 569,30,1;
+		getitembound 12209,3,1;
+		getitembound 13895,1,1;
+		getitembound 12323,50,1;
+		getitembound 12324,10,1;
+		if(Sex == 0) rentitem 20067,604800;
+		if(Sex == 1) rentitem 20068,604800;
+		set got_freebies,1;
+	}	
+	end;
+}
+
+chry_fld,111,49,5	script	Aiora Queen#chry	640,{
+	
+	if(newbie_area_quest != 7){
+	
+		mes "[ ^9d3ad3Aiora Queen^000000 ]";
+		mes "It seems you have not yet finished the necessary quests.";
+		mes "Please make sure to talk to everyone in the Novice Garden.";
+		close;
+	
+	}
+
+	if(!got_freebies){
+		mes "[ ^9d3ad3Aiora Queen^000000 ]";
+		mes "Please take the items from the box next to me.";
+		close;
+	}
+
+	mes "[ ^9d3ad3Aiora Queen^000000 ]";
+	mes "If you remember, I am the ^ff0000Queen of Aiora^000000.";
+	mes "Before we could send you back to ^ff0000Midgard^000000";
+	mes "we had to make sure you are ready.";
+	next;
+	mes "[ ^9d3ad3Aiora Queen^000000 ]";
+	mes "Here, you will now choose your ^ff0000Path and Destiny^000000.";
+	mes "Adventurer, now choose your path and walk so in the name of the ^ff0000Light^000000.";
+	switch(select("Acolyte:Archer:Mage:Merchant:Swordsman:Thief")){
+	
+		case 1:
+			next;
+			mes "[ ^9d3ad3Aiora Queen^000000 ]";
+			mes "So you wish to be a Acolyte?";
+			menu "Yes",-;
+			mes "As you wish, now I shall use my powers";
+			mes "To transport you to ^ff0000Midgard^000000";
+			mes "May the Blessing of the All Father be with you.";
+			close2;
+			warp "prontera",232,312;
+			savepoint "prontera",272,352;
+			end;
+		
+		case 2:
+			next;
+			mes "[ ^9d3ad3Aiora Queen^000000 ]";
+			mes "So you wish to be a Archer?";
+			menu "Yes",-;
+			mes "As you wish, now I shall use my powers";
+			mes "To transport you to ^ff0000Midgard^000000";
+			mes "May the Blessing of the All Father be with you.";
+			close2;
+			warp "pay_arche",135,155;
+			savepoint "payon_mem",96,100;
+			end;
+		
+		case 3:
+			next;
+			mes "[ ^9d3ad3Aiora Queen^000000 ]";
+			mes "So you wish to be a Mage?";
+			menu "Yes",-;
+			mes "As you wish, now I shall use my powers";
+			mes "To transport you to ^ff0000Midgard^000000";
+			mes "May the Blessing of the All Father be with you.";
+			close2;
+			warp "geffen",66,176;
+			savepoint "geffen",119,39;
+			end;
+		
+		case 4:
+			next;
+			mes "[ ^9d3ad3Aiora Queen^000000 ]";
+			mes "So you wish to be a Merchant?";
+			menu "Yes",-;
+			mes "As you wish, now I shall use my powers";
+			mes "To transport you to ^ff0000Midgard^000000";
+			mes "May the Blessing of the All Father be with you.";
+			close2;
+			warp "alberta",43,42;
+			savepoint "alberta",116,57;
+			end;
+		
+		case 5:
+			next;
+			mes "[ ^9d3ad3Aiora Queen^000000 ]";
+			mes "So you wish to be a Swordsman?";
+			menu "Yes",-;
+			mes "As you wish, now I shall use my powers";
+			mes "To transport you to ^ff0000Midgard^000000";
+			mes "May the Blessing of the All Father be with you.";
+			close2;
+			warp "izlude",52,133;
+			savepoint "izlude",96,102;
+			end;
+		
+		case 6:
+			next;
+			mes "[ ^9d3ad3Aiora Queen^000000 ]";
+			mes "So you wish to be a Thief?";
+			menu "Yes",-;
+			mes "As you wish, now I shall use my powers";
+			mes "To transport you to ^ff0000Midgard^000000";
+			mes "May the Blessing of the All Father be with you.";
+			close2;
+			warp "moc_ruins",61,162;
+			savepoint "moc_ruins",45,140;
+			end;
+		
+	
+	}
+	end;
+OnInit:
+	questinfo 81002,1,2;
+end;
+}

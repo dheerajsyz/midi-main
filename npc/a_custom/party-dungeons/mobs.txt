@@ -1,0 +1,4 @@
+thor_v03,0,0,0,0	monster	Kasa	1833,30,0,0,0
+thor_v03,0,0,0,0	monster	Salamander	1831,20,0,0
+thor_v03,0,0,0,0	monster Sword Guardian	1829,10,0,0
+thor_v03,0,0,0,0	monster	Bow Guardian	1830,10,0,0

@@ -1,0 +1,258 @@
+//Hell Guard - Entrance
+prontera,93,208,4	script	Hell Guardian	686,{
+	if(BaseLevel < 99){ mes "[ ^9d3ad3 Hell Guard ^000000 ]"; mes "You are not strong enough yet."; close; }
+	
+	switch(hellgate_start){
+	
+		case 1: callsub OnFirstQuest; end;
+		case 2: callsub OnSecondQuest; end;
+		case 3: callsub OnThirdQuest; end;
+		case 4: callsub OnFourthQuest; end;
+		case 5: callsub OnQuestFinish; end;
+		default: break;
+	
+	}
+	
+	if(!hellgate_start){
+		mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+		mes "Adventurer! Do you lust for more power and wealth?";
+		mes "If so, I can grant these to you, in exchange for";
+		mes "some measly tasks that would be easy for you.";
+		mes "What do you say?";
+		emotion e_gg;
+		switch(select("Sure!:What do you want?:Not interested.")){
+			case 1:
+				next;
+				mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+				mes "Now that's the spirit.";
+				mes "First, please sign this contract.";
+				mes "I will need ^FF000050^000000 Worn Out Scrolls to proceed.";
+				if(countitem(618) < 50){next; mes "[ ^9d3ad3 Hell Guard ^000000 ]"; mes "Fetch me ^FF000010^000000 Worn Out Scrolls first."; close; end; }
+				pcblockmove getcharid(3),1;
+				specialeffect2 510,AREA;
+				progressbar "green",2;
+				specialeffect2 154,AREA;
+				pcblockmove getcharid(3),0;
+				mes "Ahh, you have signed it.";
+				announce strcharinfo(0)+" has started his quest to open Hell's Gate.",0;
+				next;
+				mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+				mes "The next step is to now talk to my Lord.";
+				mes "He is currently at the deepest level of the Geffen Dungeon.";
+				set hellgate_start,1;
+				delitem 618,50;
+				close;
+			case 2:
+				next;
+				mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+				mes "A simple task really.";
+				mes "Do a couple of errands for me";
+				mes "and you can gain more wealth";
+				mes "and power, beyond your imagination.";
+				close;
+			case 3:
+				next;
+				mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+				mes "Suit yourself, Adventurer.";
+				close;
+		}
+	}
+	
+OnFirstQuest:
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+	mes "I told you, look for my Lord.";
+	mes "He should be in the deepest level";
+	mes "of the Geffen Dungeon.";
+	close;
+end;
+
+OnSecondQuest:
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+	mes "Great! You've gained the Lord's trust.";
+	mes "Now, I will require you to obtain ^ff000010 Golden Ornament^000000";
+	mes "These can be found from ^ff0000Observations^000000";
+	set hellgate_start,3;
+	close;
+end; 
+
+OnThirdQuest:
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+		if(countitem(7435) < 30){
+			mes "It seems that you do not have the items.";
+			mes "Come back when you have them.";
+			close;
+			end;
+		}
+	mes "Yes, this seems to be good enough.";
+	specialeffect 409,AREA;
+	progressbar "green",1;
+	mes "Now, I will require you to kill a monster.";
+	mes "This is the last barrier that is holding our powers back.";
+	next;
+	set hellgate_start,4;
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+	mes "Do you wish to confront them now?!";
+	next;
+	menu "Yes",-;
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+	mes "I wish you luck.";
+	mes "If you fail this challenge, come back to me to try again.";
+	warp "pvp_n_1-3",100,139;
+	delitem 7435,30;
+	close;
+end;
+
+OnFourthQuest:
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+		if(hellgate_mob < 1){
+			mes "It seems you have not yet killed your opponent.";
+			mes "Do you wish to try again?";
+			next;
+			menu "Yes",-;
+			mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+			mes "Good hunting.";
+			progressbar "green",1;
+			warp "pvp_n_1-3",100,139;
+			end;
+		}
+	mes "Marvelous! You have cleared all obstacles!";
+	mes "You have gathered the necessary items,";
+	mes "proven that your strength is more than of a match to";
+	mes "those accursed Observations.";
+	mes "And now you have taken down their guardian.";
+	next;
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+	mes "With all those out of the way, you can now proceed and talk to by lord.";
+	set shinra_start,4;
+	close;
+end;
+	
+	
+OnQuestFinish:
+	mes "[ ^9d3ad3 Hell Guard ^000000 ]";
+	mes "You have done it adventurer! Now the world shall fall to ruin!";
+	mes "Hmmp, it was a farce, now my real Lord is unleashed.";
+	mes "You can fight him in the Hell's Gate Dungeon.";
+	mes "I doubt you can defeat him.";
+	emotion e_gg;
+	close;
+end;
+
+}
+
+//Lord Shinra - Second Quest
+gef_dun03,98,153,4	script	Lord Shinra	468,{
+	if(!hellgate_start){
+		mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+		mes "This place, reminds me of home...";
+		close;
+	}
+	
+	switch(shinra_start){
+		case 1: callsub OnShinra_First; end;
+		case 2: callsub OnShinra_Second; end;
+		case 3: callsub OnShinra_Third; end;
+		case 4: callsub OnShinra_Final; end;
+		default: break;
+	}
+	
+	switch(hellgate_start){
+	
+		case 1: callsub OnHellgate_One; end;
+		case 2: callsub OnHellgate_Outro; end;
+		case 3: callsub OnHellgate_Outro; end;
+		default: end;
+	
+	}
+	
+OnHellgate_One:
+
+	specialeffect2 127,AREA;
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+	mes "Hmm, so an Adventurer has signed the contract eh.";
+	mes "Well, let's see your worth.";
+	mes "In this dungeon lives the infamous";
+	mes "^ff0000Incubi^000000 and the ^ff0000Succubi^000000.";
+	next;
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+	mes "Bring me their ^ff0000horns^000000.";
+	mes "I shall reward you a hefty reward if you can.";
+	set shinra_start,1;
+	close;
+end;
+
+OnHellgate_Outro:
+
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+	mes "Thank you for your assistance adventurer.";
+	mes "Please go back to my subordinate at Prontera.";
+	close;
+end;	
+
+OnShinra_First:
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+		if(countitem(5066) < 1 || countitem(5072) < 1){
+			mes "It seems like you do not have the ^ff0000horns^000000 that I have asked for.";
+			mes "Come back when you actually have them.";
+			close;
+			end;
+		}
+	mes "Splendid! Now, please gather ^ff00005 Little Evil Horns^000000.";
+	mes "You can get them from these small ^ff0000Deviruchis^000000";
+	delitem 5066,1;
+	delitem 5072,1;
+	set shinra_start, 2;
+	close;
+end;
+
+OnShinra_Second:
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+		if(countitem(1038) < 5){
+			mes "It seems like you do not have the ^ff0000horns^000000 that I have asked for.";
+			mes "Come back when you actually have them.";
+			close;
+			end;
+		}
+	mes "Yes! This is what I actually needed!";
+	mes "This is perfect!";
+	npctalk "The power flows through me!";
+	delitem 1038,5;
+	set .@a, 2;
+	while(.@a < 11){
+		specialeffect getd("17"+.@a),AREA;
+		.@a++;
+		sleep2 500;
+	}
+	
+	set shinra_start, 3;
+	next;
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+	mes "It seems you really have potential adventurer.";
+	mes "Now, I require you the most rare horn of them all.";
+	mes "Please provide me ^ff00001 Magestic Goat^000000";
+	mes "You can get it from ^ff0000Baphomet^000000";
+	close;
+	end;
+	
+OnShinra_Third:
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+		if(countitem(2256) < 1){
+			mes "It seems like you do not have the ^ff0000horns^000000 that I have asked for.";
+			mes "Come back when you actually have them.";
+			close;
+			end;
+		}
+	mes "Finally, the last piece is here.";
+	mes "Thank you adventurer for your help.";
+	mes "Please accept this as a token of appreciation.";
+	getitem 969,5;
+	delitem 2256,1;
+	set shinra_start, 99;
+	set hellgate_start,2;
+	close;
+end;
+
+OnShinra_Final:
+	mes "[ ^9d3ad3 Lord Shinra ^000000 ]";
+	
+}

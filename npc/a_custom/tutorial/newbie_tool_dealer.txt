@@ -1,0 +1,52 @@
+didymos1,292,143,5	script	Tool Dealer#quest	88,{
+
+
+	if(tooldealer_done == 1) goto OnDoneQuest;
+
+	mes .name$;
+	mes "Welcome to ^9d3ad3Aiora^000000.";
+	mes "Is it your first time here in ^9d3ad3Aiora^000000?";
+	menu "Yes, it is, may I ask who you are?",-;
+	next;
+	mes .name$;
+	mes "Oh, I'm called a ^ff0000Tool Dealer^000000";
+	mes "You can buy ^ff0000Consumables^000000 from me.";
+	mes "You can also sell your ^ff0000items^000000 that you don't need as well.";
+	next;
+	mes .name$;
+	mes "Since you're just new to ^9d3ad3Aiora^000000,";
+	mes "you should walk around and talk with the others.";
+	next;
+	mes .name$;
+	mes "Here's a little exp for the trouble of listening to me.";
+	
+		getexp .quest_bexp,.quest_jexp;
+		set tooldealer_done,1;
+		setquest 80000,getcharid(0);
+		completequest 80000,getcharid(0);
+		
+	mes "Talk to everyone okay?";
+	close;
+
+	end;
+	
+OnDoneQuest:
+
+	mes .name$;
+	mes "What brings you back here "+strcharinfo(0)+"?";
+	mes "Did you forget something?";
+	close;
+	end;
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	questinfo 80000,1,2;
+	
+	set .name$,"[ ^9d3ad3Tool Dealer^000000 ]";
+	
+end;
+
+}

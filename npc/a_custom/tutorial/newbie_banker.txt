@@ -1,0 +1,57 @@
+didymos1,88,155,5	script	Banker#quest	109,{
+
+	if(banker_done == 1) goto OnBankerOption;
+
+	mes .name$;
+	mes "Welcome to ^9d3ad3Aiora^000000.";
+	mes "The only place where the poor is treated as the same as the rich.";
+	menu "Really? Can you tell me why?",-;
+	next;
+	mes .name$;
+	mes "Hush now, you did not hear anything that I just said.";
+	mes "I am known as the ^ff0000Banker^000000";
+	mes "When you arrive to the world below, your status will depend on how much ^ff0000Zeny^000000 you have.";
+	mes "^ff0000Zeny^000000 will be your most powerful weapon there.";
+	next;
+	mes .name$;
+	mes "And to assist adventurers like you, we offer services to keep your precious ^ff0000Zeny^000000.";
+	mes "I will only be available at the town of ^ff0000Payon^000000 so bear that in mind.";
+	next;
+	mes .name$;
+	mes "Here's a little Zeny to help you in your journey.";
+	dispbottom "You gained 1,000z";
+	
+		Zeny += 1000;
+		set banker_done,1;
+		setquest 80007,getcharid(0);
+		completequest 80007,getcharid(0);
+		
+	mes "Talk to everyone okay?";
+	close2;
+
+	cutin "",255;
+
+	end;
+	
+OnBankerOption:
+
+	mes .name$;
+	mes "Hello "+strcharinfo(0)+", do you need something?";
+	mes "My services is not yet available for now.";
+	mes "I'm sorry.";
+	close;
+	
+	end;
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	set .name$,"[ ^9d3ad3 Banker ^000000 ]";
+	
+	questinfo 80007,1,2;
+	
+end;
+
+}

@@ -1,0 +1,56 @@
+didymos1,180,146,5	script	Warper#quest	696,{
+
+	if(warper_done == 1) goto OnWarperOption;
+
+	mes .name$;
+	mes "Welcome to ^9d3ad3Aiora^000000.";
+	mes "I am amazed of how people from different places can stay here~";
+	menu "Me too, but who are you?",-;
+	next;
+	mes .name$;
+	mes "Oh, I apologize for not introducing myself.";
+	mes "People call me the ^ff0000Warper^000000";
+	mes "You can say that I can ^ff0000Warp^000000 you to where you want.";
+	mes "But before you can avail of my services, you'll have to ^ff0000visit the appropriate place^000000 to where you want to warp.";
+	next;
+	mes .name$;
+	mes "Also, there is a fee of ^ff0000100z * BaseLevel^000000 to my services.";
+	mes "You can find me in ^ff0000Main Cities^000000 down below.";
+	next;
+	mes .name$;
+	mes "Here's a little exp for the trouble of listening to me.";
+	
+		getexp .quest_bexp,.quest_jexp;
+		set warper_done,1;
+		setquest 80001,getcharid(0);
+		completequest 80001,getcharid(0);
+		
+	mes "Talk to everyone okay?";
+	close2;
+
+	cutin "",255;
+
+	end;
+	
+OnWarperOption:
+
+	mes .name$;
+	mes "Hello "+strcharinfo(0)+", do you need something?";
+	mes "I can only use my powers when I am in the world below.";
+	mes "I'm sorry.";
+	close;
+	
+	end;
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	set .name$,"[ ^9d3ad3 Warper ^000000 ]";
+	
+	questinfo 80001,1,2;
+	
+end;
+
+}

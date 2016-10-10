@@ -1,0 +1,170 @@
+// -----------------------------------------------
+// -- Panda Script Collections --
+// -- Monster Alberta Race --
+// -----------------------------------------------
+// -- Novice Only Edition --
+// -----------------------------------------------
+// Version I - Initial Release
+// Version II - Added GM commands to control event
+// -----------------------------------------------
+
+-	script	Albert_Race#main	-1,{
+
+OnEventStart:
+	set .winner,3;
+	set .event_start,1;
+	set .@course_select,rand(0,2);
+	switch(.@course_select){
+		case 0:
+			set .course,1;
+			break;
+		case 1:
+			set .course,2;
+			break;
+		case 2:
+			set .course,3;
+			break;
+	}
+	if(!.@course){
+		announce "Something went wrong, no course has been selected..",0;
+	}
+	donpcevent "Albert_Race#time::OnEventStart";
+	end;
+	
+OnCourseOne:
+
+	enable "First Check Point#1";
+	enable "Second Check Point#1";
+	enable "Final Check Point#1";
+		
+	set .@monster_count, 0;
+	while(.@monster_count < 22){
+		set .@x, 40 + .@monster_count;
+		monster "pvp_y_1-4",.@x,228,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		monster "pvp_y_1-4",.@x,229,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		monster "pvp_y_1-4",.@x,230,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 25){ //This is the wall that blocks before event starts
+		set .@y, 228 + .@monster_count;
+		monster "pvp_y_1-4",38,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnStart";
+		monster "pvp_y_1-4",39,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnStart";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 9){
+		set .@x, 52 + .@monster_count;
+		monster "pvp_y_1-4",.@x,222,"Wall",1367,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 10){
+		set .@x, 51 + .@monster_count;
+		monster "pvp_y_1-4",.@x,220,"Wall",1367,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 15){
+		set .@x, 48 + .@monster_count;
+		monster "pvp_y_1-4",.@x,199,"Wall",1367,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 1){
+		set .@x, 33 + .@monster_count;
+		monster "pvp_y_1-4",.@x,197,"Wall",1367,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 8){
+		set .@y, 189 + .@monster_count;
+		monster "pvp_y_1-4",46,.@y,"Wall",1367,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 4){
+		set .@x, 42 + .@monster_count;
+		monster "pvp_y_1-4",.@x,184,"Wall",1367,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 10){
+		set .@x, 49 + .@monster_count;
+		monster "pvp_y_1-4",.@x,183
+	}
+	
+	
+
+}
+
+-	script	Alberta_Race#time	-1,{
+
+OnEventStart:
+	
+	announce "Alberta Race will begin in 5 minutes.",0;
+	enablenpc "Albert Race Warper";
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	
+	announce "Alberta Race will begin in 4 minutes.",0;
+	end;
+
+OnTimer120000:
+	
+	announce "Alberta Race will begin in 3 minutes.",0;
+	end;
+	
+OnTimer180000:
+	
+	announce "Alberta Race will begin in 2 minutes.",0;
+	sleep 2000;
+	announce "Please prepare your novices.",0;
+	end;
+	
+OnTimer240000:
+	
+	announce "Alberta Race will begin in 1 minute.",0;
+	sleep 2000;
+	announce "Please proceed to Alberta to join.",0;
+	end;
+
+	
+OnTimer300000:
+	
+	announce "Alberta Race has begun!",0;
+	sleep 2000;
+	announce "Reach the finish line to claim the rewards!",0;
+	sleep 2000;
+	announce "Only novices can claim the prize, consumables have been disabled.",0;
+	setmapflag "gef_tower",mf_noitemconsumption;
+	mapwarp "gef_tower","geffen",119,100;
+	set .course, getvariableofnpc(.course,"Albert_Race#main");
+	switch(.course){
+		case 1:
+			donpcevent "Alberta_Race#main::OnCourseOne";
+			end;
+		case 2:
+			donpcevent "Alberta_Race#main::OnCourseTwo";
+			end;
+		case 3:
+			donpcevent "Alberta_Race#main::OnCourseThree";
+			end;
+	}
+	
+	end;
+
+}
+
+//Checkpoints
+
+pvp_y_1-4,104,119,5	script	First Check Point#1	123,{
+	mes "[ Check Point ]";
+	mes "Alrighty, setting you here.";
+	close2;
+	set alberta_race,1;
+	announce strcharinfo(0)+" has arrived at the first check point!",1;
+	end;
+}

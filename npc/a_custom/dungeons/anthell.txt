@@ -1,0 +1,117 @@
+//moc_fild04,219,328,0	warp	moc_ant1-2#1	1,1,anthell01,36,262
+//moc_fild15,257,253,0	warp	moc_ant2-2#1	1,1,anthell02,168,170
+
+moc_fild04,219,328,4	script	Ant Hell#1	105,{
+
+if(BaseLevel < .free_entrance){ 
+
+	warp "anthell01",36,262;
+	end;
+
+}
+
+if(countitem(30075)){
+	warp "pay_dun00",21,183;
+	end;
+}
+
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+	
+	mes "[ ^0000FFAnt Hell Guard^000000 ]";
+	mes "This is the entrance to ^0000FFAnt Hell^000000";
+	next;
+	
+	if ( $@partymembercount < .party ) {
+		mes "[ ^0000FFAnt Hell Guard^000000 ]";
+		mes "Party members required: ^FF0000"+.party+"^000000";
+		mes "Current Party members: ^FF0000"+$@partymembercount+"^000000";
+		menu "Bribe",-;
+		next;
+		mes "[ ^0000FFAnt Hell Guard^000000 ]";
+		mes "Hmm, pay me "+.pay$+" and I will let you through.";
+		menu "Pay",-;
+		next;
+		if(Zeny < .zeny_fee){ mes "[ ^0000FFAnt Hell Guard^000000 ]"; mes "You don't have enough Zeny."; close; }
+		Zeny -= .zeny_fee;
+		warp "anthell01",36,262;
+		end;
+	}
+	
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+	
+	if ( .@count_online != $@partymembercount ) {
+		mes "[ ^0000FFCoal Mines Guard^000000 ]";
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	warp "anthell01",36,262;
+	end;
+
+OnInit:
+	set .party,2; //number of party members required
+	set .zeny_fee,3000; //entrance fee
+	set .free_entrance,30; //level for free entry
+	set .pay$,"^FF0000" + callfunc("F_InsertComma",.zeny_fee) + "z^000000"; //don't touch
+end;
+	
+}
+
+moc_fild15,257,253,4	script	Anthell#2	105,{
+
+if(BaseLevel < .free_entrance){ 
+
+	warp "anthell02",168,170;
+	end;
+
+}
+
+if(countitem(30075)){
+	warp "pay_dun00",21,183;
+	end;
+}
+
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+	
+	mes "[ ^0000FFAnt Hell Guard^000000 ]";
+	mes "This is the entrance to ^0000FFAnt Hell^000000";
+	next;
+	
+	if ( $@partymembercount < .party ) {
+		mes "[ ^0000FFAnt Hell Guard^000000 ]";
+		mes "Party members required: ^FF0000"+.party+"^000000";
+		mes "Current Party members: ^FF0000"+$@partymembercount+"^000000";
+		next;
+		mes "[ ^0000FFAnt Hell Guard^000000 ]";
+		mes "Hmm, pay me "+.pay$+" and I will let you through.";
+		menu "Pay",-;
+		if(Zeny < 10000){ mes "[ ^0000FFAnt Hell Guard^000000 ]"; mes "You don't have enough Zeny."; close; }
+		Zeny -= 10000;
+		warp "anthell02",168,170;
+		end;
+	}
+
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+	
+	if ( .@count_online != $@partymembercount ) {
+		mes "[ ^0000FFCoal Mines Guard^000000 ]";
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	warp "anthell02",168,170;
+	end;
+
+OnInit:
+	set .party,2; //number of party members required
+	set .zeny_fee,3000; //entrance fee
+	set .free_entrance,40; //level for free entry
+	set .pay$,"^FF0000" + callfunc("F_InsertComma",.zeny_fee) + "z^000000"; //don't touch
+end;
+}

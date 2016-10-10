@@ -1,0 +1,58 @@
+didymos1,149,93,5	script	Blacksmith#quest	63,{
+
+	if(bs_done == 1) goto OnBSOption;
+
+	mes .name$;
+	mes "Hmm, so this is ^9d3ad3Aiora^000000 huh?";
+	mes "Well, I guess I can ask around to improve my ^ff0000craft^000000.";
+	menu "Can you tell me what your craft is?",-;
+	next;
+	mes .name$;
+	mes "Hhmm, my craft? Of course it is the one and only ^ff0000Blacksmithing^000000!";
+	mes "I am known as the ^ff0000Blacksmith^000000";
+	mes "When you have an item you want to become ^ff0000stronger^000000, come to me and I can upgrade it.";
+	mes "I will request some materials before I can perform ^ff0000Equipment Refinement^000000.";
+	next;
+	mes .name$;
+	mes "You can find me in any town on the world below..";
+	mes "Well, thats what I can tell you, so be sure to visit my shops when you can.";
+	next;
+	mes .name$;
+	mes "Here's some forging materials to get you started.";
+	dispbottom "You gained 1,000z";
+	
+		getitembound 1010,4,1;
+		getitembound 1011,4,1;
+		set bs_done,1;
+		setquest 80004,getcharid(0);
+		completequest 80004,getcharid(0);
+		
+	mes "Talk to everyone okay?";
+	close2;
+
+	cutin "",255;
+
+	end;
+	
+OnBSOption:
+
+	mes .name$;
+	mes "Hello "+strcharinfo(0)+", do you need something?";
+	mes "My forging hammer was left behind at home.";
+	mes "I'm sorry.";
+	close;
+	
+	end;
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	set .name$,"[ ^9d3ad3 Blacksmith ^000000 ]";
+	
+	questinfo 80004,1,2;
+	
+end;
+
+}

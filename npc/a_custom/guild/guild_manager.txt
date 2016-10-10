@@ -1,0 +1,76 @@
+-	script	Guild Manager	-1,{
+
+    set .emperium, 714; // Item ID 1
+    set .itemreq1, 1; // Ammount of item number 1 (9 since an emp is also consumed naturally upon guild creation)
+    //set .itemreq2, 10; // Ammount of item number 2
+    set .name$, "[ ^9d3ad3 Guild Manager ^000000 ]";
+    mes .name$;
+    mes "Hello there "+strcharinfo(0)+".";
+    mes "I can help you form a guild or disband your current one.";
+	mes "Note: This service requires";
+	mes "^FF00001 Emperium^000000";
+    menu "Sign-up for Guild Creation.",L_create,"Disband Guild.",L_disband;
+
+L_create:
+    if(getcharid(2) == 0) { goto L_approve; }
+    else { goto L_inguild; end; }
+
+L_approve:
+    next;
+    mes .name$;
+    mes "Alright, I need you to tell me the name you want for your guild.";
+    sleep2 1500;
+    input @gcreatenm$;
+    mes "Are you sure that's what you want?";
+    switch(select("Yes:No")) {
+
+case 1:
+    if(countitem(.emperium) < .itemreq1) { goto L_nope; end; }
+    mes .name$;
+    mes "Alright then let's try this...";
+    atcommand "@guild "+@gcreatenm$;
+    next;
+    if(getcharid(2) == 0) { mes "Woops, seems like that guild already exists...try another name."; goto L_create; end; }
+    announce "Guild Manager: [ "+strcharinfo(2)+" ] has been formed by [ "+strcharinfo(0)+" ] !",0;
+    mes .name$;
+    mes "Congrats.";
+    delitem .emperium, .itemreq1;
+    close;
+    end;
+
+case 2:
+    goto L_crxeate;
+    end;
+    }
+
+L_disband:
+    if(getcharid(2) == 0) { goto L_noguild; end; }
+	next;
+	mes .name$;
+	mes "You sure?";
+	menu "Yes",-;
+    if(getguildmaster(getcharid(2)) == strcharinfo(0)) { next; mes .name$; mes "It is done."; atcommand "@breakguild"; close; end; }
+    else { mes .name$; mes "You're not the guild leader."; close; end; }
+    
+L_nope:
+    next;
+    mes .name$;
+    mes "You need: ";
+	mes "^0000FF1 Emperium^000000"; 
+    close;
+
+L_inguild:
+    next;
+    mes .name$;
+    mes "You're already in a guild!";
+    close;
+
+L_noguild:
+    next;
+    mes .name$;
+    mes "You're not even in a guild!";
+    close;
+}
+
+itemmall,15,78,4	duplicate(Guild Manager)	Guild Manager#1	666
+sec_in02,177,149,4	duplicate(Guild Manager)	Guild Manager#2	666

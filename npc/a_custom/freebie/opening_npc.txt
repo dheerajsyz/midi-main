@@ -1,0 +1,35 @@
+-	script	Newbie Helper	-1,{
+
+if(#Nov_claim >= 1){ cutin "ca_smil",2; mes .npc_name$; mes .novice_claimed$; close2; cutin "",255; end; }
+
+	mes .npc_name$;
+	cutin "ca_smil",2;
+	for(set .@i,0; .@i < .nov_intro_length; .@i++){
+		mes .novice_intro$[.@i];
+	}
+	for(set .@i,0; .@i < .nov_length; .@i++){
+		getitembound .novice[.@i],.novice_amount[.@i],1;
+	}
+	close2;
+	set #Nov_claim,1;
+	cutin "",255;
+	end;
+	
+	
+OnInit:
+//Config Start
+	setarray .novice,501,30083,30084,30074; //items novice receives
+	setarray .novice_amount,50,1,1,1; //how many items the novice revieces
+
+	set .npc_name$,"[ Freebies ]"; //npc name	
+	set .novice_claimed$,"You already claimed this package."; //message when already claimed::novice
+	setarray .novice_intro$,"Welcome to Chaos Server","Thank you for playing!","Please accept this as our appreciation."; //welcome message
+	waitingroom "Chaos Ragnarok Online",0; //waitingroom name
+//Config End;
+//Do not touch
+	set .nov_length,getarraysize(.novice);
+	set .nov_intro_length,getarraysize(.novice_intro$);
+	end;
+}
+
+new_1-1,54,114,4	duplicate(Newbie Helper)	Newbie Helper#1	72

@@ -1,0 +1,15 @@
+login_server_id: root
+login_server_pw: r52HQXpkTCdBcYGw7PD_
+login_server_db: main
+ipban_db_id: root
+ipban_db_pw: r52HQXpkTCdBcYGw7PD_
+ipban_db_db: main
+char_server_id: root
+char_server_pw: r52HQXpkTCdBcYGw7PD_
+char_server_db: main
+map_server_id: root
+map_server_pw: r52HQXpkTCdBcYGw7PD_
+map_server_db: main
+log_db_id: root
+log_db_pw: r52HQXpkTCdBcYGw7PD_
+log_db_db: logs

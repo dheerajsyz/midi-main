@@ -1,0 +1,178 @@
+// [ ==== rAthena =============================================== ]
+// [ = Bank NPC                                                   ]
+// [ ==== By: =================================================== ]
+// [ = Echoes                                                     ]
+// [ ==== Actual Version: ======================================= ]
+// [ = 1.0                                                        ]
+// [ ==== Description: ========================================== ]
+// [ = 0.1: Initial version.                                      ]
+// [ = 1.0: Release version.                                      ]
+// [ ==== Additional Comments: ================================== ]
+// [ = 1.0: It may offer PIN Code protection if activated.        ]
+// [ ============================================================ ]
+-	script	BankSystem#main	-1,{
+/* Initial Configurations */
+	//NPC Name
+	.npc$ = "[ Banker ]";
+		
+	//Tax percentage the NPC have at the moment of deposit.
+	.@TaxRate = 12*BaseLevel;
+	
+	//Zeny limit the NPCs have per account.
+	.ZenyLimit = 2147483647;
+	
+	//PIN Code. Extra defense against hackers.
+	// 1 - Yes, 0 - No.
+	.PinCode = 0;
+
+/* Function Declarations */
+	function ZenyCheck;
+	function WithdrawCheck;
+	function PinCode;
+
+/* Script's Core */
+	mes .npc$;
+	mes "Hello my friend!";
+	mes "I can save all^ff0000*^000000 the Zeny you want!";
+	emotion e_heh;
+	mes "^ff0000*^000000^b4b4b4With a max limit obviously^000000";
+	next;
+	mes .npc$;
+	mes "Tell me what do you want to do...";
+	mes "Please note ^ff0000"+.@TaxRate+"^000000z tax will be applied for every deposit!";
+	emotion e_wasp;
+	next;
+	.@j$ = "Deposit (^ff0000"+.@TaxRate+"z^000000) Tax";
+	switch(select(.@j$+":Withdraw:View account:How do your services work?")){
+		case 1:	/*Deposit*/	
+			mes .npc$;
+			mes "Sure, how much do you want to deposit?";
+			mes "You currently have "+Zeny+" Zeny.";
+			mes "Remember, ^ff0000"+.@TaxRate+"^000000 tax will be applied to your deposit.";
+			input .@ZenyDeposit,0;
+			next;
+			PinCode(.PinCode,#BankPinCode);
+			ZenyCheck(.@ZenyDeposit,Zeny,.@TaxRate);
+			Zeny = Zeny - .@ZenyDeposit;
+			#BankZeny = .@ZenyDeposit - .@TaxRate;
+			mes .npc$;
+			mes "Your account is now on:";
+			mes "^0000ff"+#BankZeny+"^000000 Bank Zeny.";
+			mes "Thank you! Come back later!";
+			emotion e_thx;
+			close;
+		case 2:	/*Withdraw*/
+			mes .npc$;
+			mes "Okay, how much do you want to withdraw today?";
+			mes "You currently have ^0000ff"+#BankZeny+"^000000 in your account.";
+			input .@ZenyWithdraw,0;
+			next;
+			PinCode(.PinCode,#BankPinCode);
+			WithdrawCheck(.@ZenyWithdraw,#BankZeny);
+			Zeny = Zeny + .@ZenyWithdraw;
+			#BankZeny = #BankZeny - .@ZenyWithdraw;
+			mes .npc$;
+			mes "There you go.";
+			mes "Come back later!";
+			close;
+		case 3:	/*View account*/
+			mes .npc$;
+			mes "Sure!";
+			mes "You currently have";
+			mes "^0000ff"+#BankZeny+"^000000 Zeny in the Bank.";
+			mes "Come back soon!";
+			close;
+		case 4:	/*How do your services work?*/
+			mes .npc$;
+			mes "I can bank all your Zeny, with up to "+.ZenyLimit+" per account so you can withdraw it with another character.";
+			next;
+			mes .npc$;
+			mes "Every deposit comes with a tax due to my worship, so everyone wins, and this works as '25 * your Base Level' since I'm not that good in math I can't apply percentage taxes.";
+			emotion e_sob;
+			if(!.PinCode) close;
+			next;
+			mes .npc$;
+			mes "But do not fear, I would not let robbers steal your Zeny that easy, before any Deposit or Withdraw I will ask you your secret number.";
+			mes "Just in case, I have a partnership with the Administrators, so if anything happens, I would request you to contact them.";
+			close;
+	}
+	end;
+
+/* Function Definitions */
+	function	ZenyCheck	{
+		if(getarg(1) < getarg(0)){
+			mes .npc$;
+			mes "What do you think you are doing?!";
+			emotion e_wasp;
+			mes "You don't have that amount to deposit!";
+			close;
+		}else if(getarg(0) < getarg(2)){
+			mes .npc$;
+			mes "To prevent ^ff0000Account cancelation^000000 you should deposit more than "+getarg(2)+" Zeny.";
+			emotion e_swt;
+			close;
+		}else return;
+	}
+	function	WithdrawCheck	{
+		if(getarg(1) < getarg(0)){
+			mes .npc$;
+			mes "You don't have that amount available!";
+			mes "Are you trying to fool me?!";
+			emotion e_wasp;
+			close;
+		}else return;
+	}
+	function	PinCode	{
+		if(getarg(0)){
+			if(#BankPinCode == 0){
+				mes .npc$;
+				mes "Oh, I see you don't have a PIN Code set yet.";
+				mes "Please understand this is for your own sake.";
+				mes "Please input a ^ff0000four^000000 digit number.";
+				do input .@PinCodeTryFIRST;
+				while(.@PinCodeTryFIRST < 1000 || .@PinCodeTryFIRST > 9999);
+				next;
+				mes .npc$;
+				mes "Please verify that number.";
+				do input .@PinCodeTrySECOND;
+				while(.@PinCodeTrySECOND != .@PinCodeTryFIRST);
+				next;
+				#BankPinCode = .@PinCodeTryFIRST;
+				mes .npc$;
+				mes "Thank you!";
+				next;
+				
+			}
+			mes .npc$;
+			mes "Please input your PIN Code.";
+			.@i=0;
+			while(.@i<3){
+				input .@PinCode;
+				if(.@PinCode != #BankPinCode) .@i++;
+				else return;
+			}
+			mes .npc$;
+			mes "You have entered your PIN Code incorrectly three times.";
+			mes "If you don't remember it, please contact an Administrator.";
+			query_sql("INSERT INTO bankpincodelog (char_id, account_id, char_name, trigger_ip, time, message) VALUES ('"+getcharid(0)+"', '"+getcharid(3)+"', '"+strcharinfo(0)+"', '"+getcharip()+"', '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', 'Player has input wrong Bank PIN Code three times.')");	
+			close;
+		}else return;
+	}
+
+/* OnInit Configurations */
+OnInterIfInitOnce:
+	if(.PinCode)
+		if(query_sql("SELECT * FROM bankpincodelog") == -1)
+			query_sql("CREATE TABLE bankpincodelog(char_id int(11), account_id int(11), char_name varchar(30), trigger_ip varchar(100), time datetime, message varchar(255))");
+	end;
+}
+// ----------------
+// -- Duplicates --
+// ----------------
+alberta,22,244,6	duplicate(BankSystem#main)	Banker#alb	109
+aldebaran,133,118,6	duplicate(BankSystem#main)	Banker#ald	109
+geffen,132,66,4	duplicate(BankSystem#main)	Banker#gef	109
+izlude,115,105,7	duplicate(BankSystem#main)	Banker#izl	109
+morocc,152,78,7	duplicate(BankSystem#main)	Banker#moc	109
+payon_mem,72,116,6	duplicate(BankSystem#main)	Banker#pay	109
+prontera,142,180,7	duplicate(BankSystem#main)	Banker#prt	109

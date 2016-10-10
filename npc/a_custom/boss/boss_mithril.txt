@@ -1,0 +1,18 @@
+-	script	MVPDROP	-1,{
+	OnNPCKillEvent:
+		if ( getmonsterinfo( killedrid, 22 ) ) {
+			for ( .@i = 0; .@i < getarraysize( .items ); .@i += 3 ) {
+				if ( rand( 100 ) < .items[ .@i +  2 ] ) {
+					getitem .items[ .@i ], .items[ .@i + 1 ];
+					//announce "Wow! " +strcharinfo( 0 )+ " has obtained " +getitemname( .items[ .@i ] )+ " [" +.items[ .@i + 1 ]+ "] from " +getmonsterinfo(killedrid, 0)+ ".",0;
+				}
+			}
+		}
+	end;
+	
+	OnInit:
+		// <item id>,<amount>,<chance>
+		setarray .items[0],7179,1,20
+						  ,7179,5,10;
+		end;
+}

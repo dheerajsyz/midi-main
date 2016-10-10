@@ -1,0 +1,187 @@
+//////////////////////////////////////////////////////////////////
+//
+//
+//
+//    	   Midi City Ragnarok Online - Automatic Quest
+//				  Author - Cyan Hijirikawa
+//
+//
+//////////////////////////////////////////////////////////////////
+
+-	script	QuestGiver#main	-1,{
+
+	cutin "squirrel_girl",2;
+	if(strcharinfo(3) == "pay_arche") callsub OnQuestSelect,"[ ^9d3ad3 Payon Cave Quest Giver ^000000 ]","Payon Cave","payon";
+	if(strcharinfo(3) == "prt_fild05") callsub OnQuestSelect,"[ ^9d3ad3 Culverts Quest Giver ^000000 ]","Prontera Culverts","prontera";
+	close2;
+	cutin "",255;
+end;
+
+OnQuestSelect:
+
+	if(getarg(2) == "payon"){
+	
+		setarray .1_reward, 598,25;//swordsman reward, light red potion,amount
+		setarray .2_reward, 11502,25;//mage reward, light blue potion,amount
+		setarray .3_reward, 12009,2;//archer reward, silver arrow,amount
+		setarray .4_reward, 11502,25;//acolyte reward, light blue potion,amount
+		setarray .5_reward, 598,25;//merchant reward, light red potion,amount
+		setarray .6_reward, 598,25;//thief reward, light red potion,amount
+		
+		setarray .mob_require,1015,1014,1005; //mob id to kill
+		setarray .mob_amount,5,5,5; //mob amount
+		
+		if(getd(getarg(2)+"_new_quest")){
+	
+			mes getarg(0);
+			mes "You have to kill: ";
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				mes "^ff0000"+.mob_amount[.@i]+"^000000x "+getmonsterinfo(.mob_require[.@i],0)+"s";
+			}
+			mes "Reward: ^0000ff"+getd("."+Class+"_reward[1]")+"x "+getitemname(getd("."+Class+"_reward[0]"))+"^000000";
+			return;
+		}
+
+		if(getd(getarg(2)+"_reward")){
+
+			mes getarg(0);
+			mes "You've already finished this quest";
+			return;
+
+		}
+	
+		mes getarg(0);
+		mes "Welcome to "+getarg(1)+".";
+		mes "Here you will encounter the following monsters: ";
+		next;
+		mes getarg(0);
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				mes .@i+1+". "+getmonsterinfo(.mob_require[.@i],0);
+			}
+		next;
+		mes getarg(0);
+		mes "You have to kill: ";
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				mes "^ff0000"+.mob_amount[.@i]+"^000000x "+getmonsterinfo(.mob_require[.@i],0)+"s";
+			}
+			mes "Reward: ^0000ff"+getd("."+Class+"_reward[1]")+"x "+getitemname(getd("."+Class+"_reward[0]"))+"^000000";
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				setd getarg(2)+"_"+.@i, .mob_amount[.@i];
+				setd getarg(2)+"_"+.@i+"_count",0;
+			}
+			
+			setd getarg(2)+"_new_quest",1;
+		
+			return;
+	
+	}
+	
+	if(getarg(2) == "prontera"){
+		
+		setarray .1_reward, 598,25;//swordsman reward, light red potion,amount
+		setarray .2_reward, 11502,25;//mage reward, light blue potion,amount
+		setarray .3_reward, 12009,2;//archer reward, silver arrow,amount
+		setarray .4_reward, 11502,25;//acolyte reward, light blue potion,amount
+		setarray .5_reward, 598,25;//merchant reward, light red potion,amount
+		setarray .6_reward, 598,25;//thief reward, light red potion,amount
+		
+		setarray .mob_require,1002,1004,1005; //mob id to kill
+		setarray .mob_amount,5,5,5; //mob amount
+		
+		if(getd(getarg(2)+"_new_quest")){
+	
+			mes getarg(0);
+			mes "You have to kill: ";
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				mes "^ff0000"+.mob_amount[.@i]+"^000000x "+getmonsterinfo(.mob_require[.@i],0)+"s";
+			}
+			mes "Reward: ^0000ff"+getd("."+Class+"_reward[1]")+"x "+getitemname(getd("."+Class+"_reward[0]"))+"^000000";
+			return;
+		}
+
+		if(getd(getarg(2)+"_reward")){
+
+			mes getarg(0);
+			mes "You've already finished this quest";
+			return;
+
+		}
+	
+		mes getarg(0);
+		mes "Welcome to "+getarg(1)+".";
+		mes "Here you will encounter the following monsters: ";
+		next;
+		mes getarg(0);
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				mes .@i+1+". "+getmonsterinfo(.mob_require[.@i],0);
+			}
+		next;
+		mes getarg(0);
+		mes "You have to kill: ";
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				mes "^ff0000"+.mob_amount[.@i]+"^000000x "+getmonsterinfo(.mob_require[.@i],0)+"s";
+				setd getarg(2)+"_"+.@i, .mob_amount[.@i];
+				debugmes getarg(2)+"_"+.@i;
+
+			}
+			mes "Reward: ^0000ff"+getd("."+Class+"_reward[1]")+"x "+getitemname(getd("."+Class+"_reward[0]"))+"^000000";
+			for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+				setd getarg(2)+"_"+.@i+"_count",0;
+				debugmes getarg(2)+"_"+.@i+"_count";
+			}
+			
+			setd getarg(2)+"_new_quest",1;
+		
+			return;
+	
+	}
+	
+end;
+		
+OnNPCKillEvent:
+    for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+            if(getd(.quest$[.@i]+"_new_quest" != 1)){
+				end;
+            }
+            if(getd(.quest$[.@i]+"_"+.@i+"_count") == .mob_amount[.@i]) {
+            	callsub OnKillCheck,.@i;
+				end;
+            }
+        	if(getd(.quest$[.@i]+"_"+.@i+"_count") < .mob_amount[.i]){
+				set getd(.quest$[.@i]+"_"+.@i+"_count"),getd(.quest$[.@i]+"_"+.@i+"_count") + 1;
+				message strcharinfo(0),"You have killed "+getd(.quest$[.i]+"_"+.@i+"_count")+" / "+getd(.quest$[.i]+"_"+.@i)+" "+getmonsterinfo(.mob_require[.@i],0);
+					if(getd(.quest$[.i]+"_"+.@i+"_count") == .mob_amount[.@i]){
+						setd .quest$[.i]+"_"+.@i,99;
+						end;
+					}
+			}
+    }
+end;
+
+OnKillCheck:
+	if(getd(.quest$[getarg(0)]+"_reward")){ end; }
+    for(set .@i,0; .@i < getarraysize(.mob_require); .@i++){
+        if(getd(.quest$[getarg(0)]+"_"+.@i) != 99){
+            .@fail = 1;
+            break;
+        }
+    }
+    if(.@fail) end;
+    else
+		getitembound getd("."+Class+"_reward[0]"),getd("."+Class+"_reward[1]"),1;
+		setd .quest[getarg(0)]+"_reward",1;
+		dispbottom "You have received your reward.";
+	end;
+	
+OnInterIfInitOnce:
+
+	setarray .quest$,"payon","prontera";
+
+end;
+
+}
+
+//duplicates
+
+pay_arche,41,136,5	duplicate(QuestGiver#main)	Payon Cave Quest	488
+prt_fild05,275,216,5	duplicate(QuestGiver#main)	Culverts Quest	488	

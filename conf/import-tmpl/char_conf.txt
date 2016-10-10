@@ -1,0 +1,6 @@
+// Server Communication username and password.
+userid: YjYxODY5OTljYjI
+passwd: YjIzYTQyOTYzMDA
+login_ip: 127.0.0.1
+char_ip: 107.160.168.72
+server_name: MidicityRO

@@ -1,0 +1,13 @@
+// --------------------------------------------------------------
+// -        	Midi Ragnarok Online Cherry Field Warps   		-
+// --------------------------------------------------------------
+
+//to novice field
+chry_fld,136,124,0	warp	chry_fld01	2,2,nov_gar01,127,95
+
+chry_fld,0,0,0	script	ChryBlossomEffect	-1,{
+end;
+OnInit:
+	atcommand "@sakura";
+end;
+}

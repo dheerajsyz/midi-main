@@ -1,0 +1,114 @@
+prontera,161,182,5	script	Freebies	123,{
+
+mes .npc_name$;
+if(BaseLevel == .max_level && JobLevel == .maxj_level){
+	doevent strnpcinfo(0)+"::OnMaxClaim";
+	}
+else if(BaseLevel == .trans_level && JobLevel == .transj_level){
+	doevent strnpcinfo(0)+"::OnTransClaim";
+	}
+else
+	doevent strnpcinfo(0)+"::OnNoviceClaim";
+end;
+
+OnNoviceClaim:
+
+	if(#novice_claimed >= 1){
+		mes .novice_claimed$;
+		close;
+		end;
+	}
+	if(Class != 0){ end; }
+	
+	mes .novice_intro$;
+	
+	next;
+	mes .npc_name$;
+	mes .novice_instructions$;
+	set #novice_claimed,1;
+	close2;
+	for(set .@i,0;.@i < .nov_length; .@i++){
+		getitembound .novice[.@i],.novice_amount[.@i],1;
+	}
+	end;
+	
+OnTransClaim:
+	
+	if(#trans_claimed >= 1){
+			mes .trans_claimed$;
+			close;
+			end;
+	}
+
+	set .trans_intro$,"Congratulations on becoming a max level "+Class+"!";
+	mes .trans_intro$;
+	
+	next;
+	mes .npc_name$;
+	mes .trans_instructions$;
+	set #trans_claimed,1;
+	close2;
+	for(set .@i,0;.@i < .trans_length; .@i++){
+		getitembound .trans[.@i],.trans_amount[.@i],1;
+	}
+	end;
+
+OnMaxClaim:
+
+	if(#max_claimed >= 1){
+		mes .trans_claimed$;
+		close;
+		end;
+	}
+	
+	set .max_intro$,"Congratulations on becoming a max level "+Class+"!";
+	mes .max_intro$;
+	
+	next;
+	mes .npc_name$;
+	mes .max_instructions$;
+	set #max_claimed,1;
+	close2;
+	for(set .@i,0;.@i < .max_length; .@i++){
+		getitembound .max[.@i],.max_amount[.@i],1;
+	}
+	end;
+
+OnInit:
+//Config Start
+	setarray .novice,501,502,503,504,505; //items novice receives
+	setarray .novice_amount,1,2,3,4,5; //how many items the novice revieces
+	setarray .trans,501,502,503,504,505; 
+	setarray .trans_amount,1,2,3,4,5; 
+	setarray .max,501,502,503,504,505; 
+	setarray .max_amount,1,2,3,4,5; 
+	
+	set .trans_level,99; //level required for trans to claim rewards
+	set .transj_level,70; //job level required for trans to claim rewards
+	set .max_level,175;
+	set .maxj_level,60;
+	
+	set .npc_name$,"[ Freebies ]"; //npc name
+	
+	//set .@claimed_novice$,"#novice_claim"; //variable used for novice
+	//set .@claimed_trans$,"#trans_claim"; //variable used for trans
+	//set .@claimed_max$,"#max_claim"; //variable used for 3rd job
+	
+	set .novice_claimed$,"[Novice] You already claimed this package."; //message when already claimed::novice
+	set .trans_claimed$,"[Transcendent] You already claimed this package."; //message when already claimed::trans
+	set .max_claimed$,"[Third Job] You already claimed this package."; //message when already claimed::3rd
+	
+	set .novice_intro$,"Welcome to Server"; //welcome message
+	
+	set .novice_instructions$,"You can claim again when you are 99/70."; //message after claiming::novice
+	set .trans_instructions$,"You can claim again when you are 165/70."; //message after claiming::trans
+	set .max_instructions$,"You can claim again when you register at our forums."; //message after claiming::3rd
+	
+	waitingroom "Freebies NPC",0; //waitingroom name
+//Config End;
+//Do not touch
+	set .nov_length,getarraysize(.novice);
+	set .trans_length,getarraysize(.trans);
+	set .max_length,getarraysize(.max);
+	end;
+}

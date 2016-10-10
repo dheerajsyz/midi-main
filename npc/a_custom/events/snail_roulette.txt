@@ -1,0 +1,236 @@
+// http://forum.ragnarokeurope.com/en/index.php?/topic/22728-try-your-luck-at-the-new-snail-game/
+
+sec_in02,177,155,5	script	Snail Roulette	730,{
+
+	mes "[ Snail Man ]";
+	mes "My pet only feeds on the following items: ";
+	mes "^FF0000Proof of Donation^000000";
+	mes "^FF0000Snail Feed^000000";
+	next;
+	mes "[ Snail Man ]";
+	mes "Shake again to go in further into his shell.";
+	mes "The futher you are in this shell,";
+	mes "the better rewards you may find.";
+	next;
+	mes "[ Snail Man ]";
+	mes "However, if you stop at";
+	mes "^FF0000"+strtoupper( .cutin_list$[ .blue_egg[2] ] )+"^000000 or ^FF0000"+strtoupper( .cutin_list$[ .green_egg[2] ] )+"^000000, it's game over.";
+	mes "Good luck.";
+	next;
+switch( select( "Feed Snail","Rules","Gift List","Leave" ) ){
+	case 1:
+		mes "^0055FFTo start at "+strtoupper( .cutin_list$[ .green_egg[2] ] )+"^000000, you need "+.green_egg[1]+" "+getitemname( .green_egg[0] );
+		mes "^0055FFTo start at "+strtoupper( .cutin_list$[ .blue_egg[2] ] )+"^000000, you need "+.blue_egg[1]+" "+getitemname( .blue_egg[0] );
+		mes " ";
+		.@count_green_egg = countitem( .green_egg[0] );
+		.@count_blue_egg = countitem( .blue_egg[0] );
+		mes "You have "+.@count_green_egg+" "+getitemname( .green_egg[0] )+" and "+.@count_blue_egg+" "+getitemname( .blue_egg[0] );
+		next;
+		cutin "roula",4;
+		.@start_mode = select( 
+			"Beginning ^777777(A)^000000 (use "+.amber_pearl[1]+" "+getitemname( .amber_pearl[0] )+")",
+			( .@count_green_egg < .green_egg[1] )?"":"Start at ^0055FF"+strtoupper( .cutin_list$[ .green_egg[2] ] )+"^000000 (use "+.green_egg[1]+" "+getitemname( .green_egg[0] )+")",
+			( .@count_blue_egg < .blue_egg[1] )?"":"Start at ^0055FF"+strtoupper( .cutin_list$[ .blue_egg[2] ] )+"^000000 (use "+.blue_egg[1]+" "+getitemname( .blue_egg[0] )+")",
+			"Cancel"
+		) - 1;
+		
+		
+		if( .@start_mode == 3 ) break;
+		else if( .@start_mode == 0 && countitem( .amber_pearl[0] ) < .amber_pearl[1] ){
+			mes "You need "+.amber_pearl[1]+" x "+getitemname( .amber_pearl[0] );
+			break;
+			
+		}else if( .@start_mode == 0 ){
+			delitem .amber_pearl[0],.amber_pearl[1];
+			
+		}else if( .@start_mode == 1 && .@count_green_egg < .green_egg[1] ){
+			mes "You need "+.green_egg[1]+" x "+getitemname( .green_egg[0] );
+			break;
+			
+		}else if( .@start_mode == 1 ){
+			delitem .green_egg[0],.green_egg[1];
+			.@start_mode = 2;
+			
+		}else if( .@start_mode == 2 && .@count_blue_egg < .blue_egg[1] ){
+			mes "You need "+.blue_egg[1]+" x "+getitemname( .blue_egg[0] );
+			break;
+			
+		}else if( .@start_mode == 2 ){
+			delitem .blue_egg[0],.blue_egg[1];
+			.@start_mode = 4;
+		}
+		
+		if( .@start_mode <= 4 ){
+			do{
+				.@start_mode++;
+				switch( .@start_mode ){
+					default: 
+						.@start_mode = 1; // start over at group 1 after finished group 7
+					case 1: setarray .@roll_area,0,8; break;
+					case 2: setarray .@roll_area,8,15; break;
+					case 3: setarray .@roll_area,15,21; break;
+					case 4: setarray .@roll_area,21,26; break;
+					case 5: setarray .@roll_area,26,30; break;
+					case 6: setarray .@roll_area,30,33; break;
+					case 7: setarray .@roll_area,33,35; break;
+				}
+				
+				mes "Thank you! Here, eat this..now shake..";
+				cutin "roul"+.cutin_list$[ .@roll_area[0] ],4;
+				next;
+				mes "Let's roll...";
+				.@roll = 0;
+				while( .@roll < 15 ){
+					.@index = rand( .@roll_area[0],.@roll_area[1] );
+					cutin "roul"+.cutin_list$[ .@index ],4;
+					sleep2 rand( 50,300 );
+					.@roll++;
+					if( .@roll > 14 && .@index == 34 ){
+						message strcharinfo(0),"Oh, too bad..you got Number 9..the Roulette will roll again.";
+						.@roll = 0;
+						sleep2 3000;
+					}
+				}
+				
+				do{
+					.@index = rand( .@roll_area[0],.@roll_area[1] );
+					cutin "roul"+.cutin_list$[ .@index ],4;
+				}while( rand(100) >= getd( ".special_"+.cutin_list$[ .@index ]+"[0]" ) );
+					
+				if( compare( .special_letter$,.cutin_list$[ .@index ] ) )
+					.@special_letter = .@index;
+					
+				.@special_size = getarraysize( getd( ".special_"+.cutin_list$[ .@index ] ) );
+				if( !.@special_size ){
+					copyarray .@reward_list[0],.special_default[0],.special_default_size;
+				}else{
+					copyarray .@reward_list[0],getd( ".special_"+.cutin_list$[ .@index ]+"[1]" ),.@special_size;
+				}
+				.@reward_list_size = getarraysize( .@reward_list );
+				
+				do{
+					.@random = rand( .@reward_list_size );
+				}while( .@random % 2 == 1 );
+				setarray .@reward,.@reward_list[ .@random ],.@reward_list[ .@random+1 ];
+				if( !.@reward[0] ) 
+					setarray .@reward,.special_default[0],.special_default[1];
+				if( .@special_letter ){
+					mes "^FF0000"+.@reward[1]+" "+getitemname( .@reward[0] )+"^000000 ? seem like that's over for now because you get the letter of "+.cutin_list$[ .@index ]+"..sorry.";
+					getitem .@reward[0],.@reward[1];
+					cutin "",255;
+					close;
+					// end;
+					
+				}else{
+					mes "What did it give you? Oh, ^FF0000"+.@reward[1]+" "+getitemname( .@reward[0] )+"^000000 !!";
+					mes "You can shake to go further..or choose to keep. What do you want to do ?";
+				
+				}
+				
+				next;
+			}while( prompt( "Shake it again","Keep it" ) == 1 );
+			if( @menu < 255 ){
+				mes "Here your reward...";
+				mes "^FF0000"+.@reward[1]+" "+getitemname( .@reward[0] )+"^000000 !!";
+				getitem .@reward[0],.@reward[1];
+				
+			}else{
+				mes "You cancelled it,..";
+			}
+		}
+		break;
+	case 2:
+		mes "[ Snail Man ]";
+		mes "If you give the item to my snail, it will split out some items.";
+		next;
+		mes "[ Snail Man ]";
+		mes "When the pearl stop, you will be able to shake it again to go further in his shell if you dont like current item.";
+		mes "Further you go, better reward you gain.";
+		next;
+		mes "[ Snail Man ]";
+		mes "If you stop at "+getitemname( .blue_egg[0] )+" or "+getitemname( .green_egg[0] )+", game over.";
+		mes "Good luck";
+		break;
+	case 3:
+		mes "[Reward List]";
+		for( .@cutin = 0; .@cutin < .cutin_list_size; .@cutin++ ){
+			mes "^0055FFLetter '"+strtoupper( .cutin_list$[.@cutin] )+"'^000000 :";
+			.@reward_size = getarraysize( getd( ".special_"+.cutin_list$[.@cutin] ) );
+			if( !.@reward_size ){
+				copyarray .@reward_list[0],.special_default[0],.special_default_size;
+			}else{
+				copyarray .@reward_list[0],getd( ".special_"+.cutin_list$[.@cutin]+"[1]" ),.@reward_size;
+			}
+			.@reward_size = getarraysize( .@reward_list );
+			for( .@reward = 0; .@reward < .@reward_size; .@reward += 2 )
+				mes "  ~  ^777777"+.@reward_list[ .@reward+1 ]+" x "+getitemname( .@reward_list[ .@reward ] )+"^000000";
+			deletearray .@reward_list;
+		}
+	default: break;
+}
+cutin "",255;
+close;
+
+OnInit:
+// required amber pearl id + amount
+setarray .amber_pearl,7227,10;
+
+// green + blue egg
+//  <egg item id>,<amount>,<start cutin>;
+setarray .green_egg,7179,1,15;
+setarray .blue_egg,7179,10,26;
+
+// default reward ( if dont found any special rewards )
+setarray .special_default,7227,2;
+
+// special rewards for each letters. ( from A-Z and 1-0 )
+// it will random pick 1 if you specify more than 1 reward for each letters.
+// rate range ( 1 ~ 100 )
+// .special_<cutin value>,<rate>,<item>,<amount>{,<item>,<amount>....};
+setarray .special_a,100,969,1,7179,1,7179,1,7179,1,969,3;
+setarray .special_b,100,969,1,608,2,607,5;
+setarray .special_c,30,969,1,30027,1,30028,1,30021,1,30022,1;
+setarray .special_d,100,969,1,608,2;
+setarray .special_e,100,969,1;
+setarray .special_f,100,969,1;
+setarray .special_g,25,969,1,608,2,30709,1,30751,1;
+setarray .special_h,100,969,1;
+setarray .special_i,100,.green_egg[0],.green_egg[1];	// default get green egg.
+setarray .special_j,100,969,2,608,2;
+setarray .special_k,100,969,2;
+setarray .special_l,100,969,2;
+setarray .special_m,100,969,2;
+setarray .special_n,30,969,2,30045,1,13848,1,30503,1;
+setarray .special_o,100,969,2;
+setarray .special_p,100,969,3;
+setarray .special_q,100,969,3;
+setarray .special_r,10,969,3,608,2,30707,1,30708,1;
+setarray .special_s,100,969,3;
+setarray .special_t,100,969,3;
+setarray .special_u,5,969,3; // jackpot
+setarray .special_v,100,.green_egg[0],.green_egg[1];	// default get green egg.
+setarray .special_w,100,969,4;
+setarray .special_x,100,969,4;
+setarray .special_y,5,969,4; // jackpot
+setarray .special_z,100,969,4;
+setarray .special_1,5,30704,1,30705,1,30706,1;
+setarray .special_2,100,969,5;
+setarray .special_3,100,969,5,608,2;
+setarray .special_4,100,969,5;
+setarray .special_5,100,.blue_egg[0],.blue_egg[1];	// default get blue egg.
+setarray .special_6,5,30051,1,30050,1,7179,10,7179,32,7179,14,7179,10,7179,5; // jackpot
+setarray .special_7,5,30028,1,30029,1,7179,20,7179,10,7179,6,7179,9,7179,3; // jackpot
+setarray .special_8,5,30001,1,30002,1,30003,1,7179,10,7179,5,7179,8,7179,9; // jackpot
+setarray .special_9,100,969,15;
+setarray .special_0,100,.blue_egg[0],.blue_egg[1];	// default get blue egg.
+
+setarray .cutin_list$,
+	"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+	"1","2","3","4","5","6","7","8","9","0";
+.cutin_list_size = getarraysize( .cutin_list$ );
+.special_default_size = getarraysize( .special_default );
+.special_letter$ = "iv590";
+end;
+}
+
+

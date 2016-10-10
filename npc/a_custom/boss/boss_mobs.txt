@@ -1,0 +1,41 @@
+// -----------------------------------------------------------------------//
+// Panda Script Collections												  //
+// Boss Spawns - Use together with OnMVPDead Script						  //
+// -----------------------------------------------------------------------//
+// By PandaLovesHamster													  //
+// -----------------------------------------------------------------------//
+// Changelog:															  //
+// v1.0 - Initial Release												  //
+// -----------------------------------------------------------------------//
+// For more additional stuff, let me know								  //
+// -----------------------------------------------------------------------//
+// Instructions:														  //
+//add more boss monsters here if you need								  //
+//be sure to add the boss monster to boss_onmvpdead as well to make sure  //
+//that the mvp will trigger said event tag 								  //
+// -----------------------------------------------------------------------//															  
+
+ama_dun03.gat,0,0,0,0	boss_monster	Samurai Specter	1492,1,3600000,1,0
+anthell01.gat,0,0,0,0	boss_monster	Phreeoni	1159,1,3600000,0,0
+anthell02.gat,0,0,0,0	boss_monster	Maya	1147,1,3600000,0,0
+gef_fild14.gat,0,0,0,0	boss_monster	Orc Hero	1087,1,3600000,0,0
+gl_chyard.gat,0,0,0,0	boss_monster	Dark Lord	1272,1,3600000,0,0
+gl_cas02.gat,0,0,0,0	boss_monster	Baphomet	1039,1,3600000,0,0
+gon_dun03.gat,0,0,0,0	boss_monster	Dark Snake Lord	1418,1,7200000,0,0
+gef_dun02.gat,0,0,0,0	boss_monster	Doppelganger	1046,1,7200000,0,0
+gef_dun03.gat,0,0,0,0	boss_monster	Dracula	1389,1,7200000,0,0
+in_sphinx5.gat,0,0,0,0	boss_monster	Pharaoh	1157,1,3600000,0,0
+mjolnir_05.gat,0,0,0,0	boss_monster	Mistress	1059,1,3600000,0,0
+moc_pryd04.gat,0,0,0,0	boss_monster	Osiris	1038,1,3600000,0,0
+moc_pryd06.gat,0,0,0,0	boss_monster	Amon Ra	1511,1,3600000,0,0
+orcsdun02.gat,0,0,0,0	boss_monster	Orc Lord	1190,1,3600000,0,0
+pay_fild10.gat,0,0,0,0	boss_monster	Eddga	1115,1,3600000,0,0
+prt_maze03.gat,0,0,0,0	boss_monster	Baphomet	1039,1,3600000,0,0
+prt_sewb4.gat,0,0,0,0	boss_monster	Golden Thief Bug	1086,1,3600000,0,0
+xmas_fild01.gat,0,0,0,0	boss_monster	Garm	1252,1,3600000,0,0
+niflheim.gat,0,0,0,0	boss_monster	Lord of the Dead	1373,1,3600000,0,0
+pay_dun04.gat,0,0,0,0	boss_monster	Moonlight Flower	1150,1,3600000,0,0
+treasure02.gat,0,0,0,0	boss_monster	Drake	1112,1,3600000,0,0
+xmas_dun02.gat,0,0,0,0	boss_monster	Stormy Knight	1251,1,3600000,0,0
+tur_dun04.gat,0,0,0,0	boss_monster	Turtle General	1312,1,3600000,0,0
+yuno_fild02.gat,0,0,0,0	boss_monster	Archangeling	1388,1,3600000,0,0

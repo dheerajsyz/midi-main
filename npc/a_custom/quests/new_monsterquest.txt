@@ -1,0 +1,120 @@
+function	script	F_HuntQuest	{
+	switch(checkquest(getarg(0,85000),HUNTING)){
+		case -1:
+			dispbottom "[ Quest System ]: Kill "+ getarg(1,"Zombie") +" - "+getarg(2,20);
+			specialeffect2 328;
+			setquest getarg(0,85000);
+			end;	
+		case 0:
+			dispbottom "[ Quest System ]: You have cleared this quest already.";
+			end;
+		case 1:
+			menu "Give up quest?",-;
+			menu "Are you sure?",-;
+			dispbottom "[ Quest System ]: Quest dropped - Kill "+ getarg(1,"Zombie") +" -";
+			erasequest getarg(0,85000);
+			end;
+		case 2:	
+			dispbottom "[ Quest System ]: Quest completed.";
+			getexp 15000,15000;
+			completequest getarg(0,85000);
+			end;	
+	}
+}
+
+function	script	F_HuntGen	{
+// F_HuntGen(<Arc Variable>,<Arc Name>,<Quest Ids>,<Mob Names>,<Mob Qnt>,<Zeny>,<Base Exp>,<Job Exp>,<Rewards Array>);
+	explode(.@QID$,getarg(2,"85000|85001|85002|85003"),"|");
+	explode(.@Names$,getarg(3,"Zombie|Spore|Familiar|Poporing"),"|");
+	explode(.@Qnts$,getarg(4,"20|20|20|20"),"|");
+	explode(.@RID$,getarg(8,"501|1"),"|");
+	if(getd(getarg(0,"payon_cave1"))){
+		dispbottom "[ Quest System ]: You have cleared this floor already.";
+		end;
+	}
+	.@size = getarraysize(.@QID$);
+	if(.@size < getarraysize(.@Names$)) .@size = getarraysize(.@Names$);
+	if(.@size < getarraysize(.@Qnts$)) .@size = getarraysize(.@Qnts$);
+	for(.@i = 0; .@i < .@size; .@i++){
+		switch(checkquest(atoi(.@QID$[.@i]),HUNTING)){
+			case -1:	.@menu$ = .@menu$ +"^0000CCStart "+.@Names$[.@i] +" Quest^000000:";	break;
+			case 0:		.@menu$ = .@menu$ +":";	break;
+			case 1:		.@menu$ = .@menu$ +"^CC0000Give Up "+.@Names$[.@i] +" Quest^000000:";	break;
+			case 2:		.@menu$ = .@menu$ +"^00CC00Complete "+.@Names$[.@i] +" Quest^000000:";	break;
+		}
+	}
+	.@i = select(.@menu$ +"Complere Arc") - 1;
+	if(.@i < .@size){
+		callfunc("F_HuntQuest",atoi(.@QID$[.@i]),.@Names$[.@i],atoi(.@Qnts$[.@i]));
+	} else {
+		for(.@i = 0; .@i < getarraysize(.@QID$); .@i++){
+			if(checkquest(atoi(.@QID$[.@i])) != 2){
+				dispbottom "[ Quest System ]: You have not finished all the previous quests yet.";
+				end;
+			}
+		}
+		announce "[ Quest System ]: "+strcharinfo(0)+" has cleared "+getarg(1,"the first floor of Payon Dungeon")+" and received abundant rewards!",0;
+		specialeffect2 381;
+		zeny += getarg(5,0);
+		if(getarg(6,0) || getarg(7,0))
+			getexp getarg(6,0),getarg(7,0);
+		dispbottom "You received Base Exp:"+getarg(6)+" and Job Exp:"+getarg(7);
+		setd getarg(0,"payon_cave1"), 1;
+		for(.@i = 0; .@i < getarraysize(.@RID$) - 1; .@i += 2){
+			if(atoi(.@RID$[.@i]) && atoi(.@RID$[.@i+1]))
+				getitem atoi(.@RID$[.@i]),atoi(.@RID$[.@i+1]);
+		}
+	}
+	end;
+}
+
+-	script	MonsterHuntingList	-1,{
+OnHuntList:
+	if(checkquest(99999) != 2){
+		dispbottom "[ Quest System ]: You have to register to the Monster Extermination Association.";
+		end;
+	}
+	for(.@i = 1; .@i < .quest_maps; .@i++){
+		if(strcharinfo(3) == .quest_maps$[.@i]){
+			.@q = .@i;
+			break;
+		}
+	}
+	switch(.@q){//	callfuncF_HuntGen(<Arc Variable>,<Arc Name>,<Quest Ids>,<Mob Names>,<Mob Qnt>,<Zeny>,<Base Exp>,<Job Exp>,<Rewards Array>);
+		case 1:	callfunc("F_HuntGen","payon_cave1","the first floor of Payon Dungeon","85000|85001|85002|85003","Zombie|Spore|Familiar|Poporing","20|20|20|20",2000,25000,18000,"7539|1");
+		case 2:	callfunc("F_HuntGen","payon_cave2","the second floor of Payon Dungeon","85004|85005|85006","Smokie|Eggrya|Magnolia","30|10|10",5000,115000,65000,"7539|1");
+		case 3:	callfunc("F_HuntGen","payon_cave3","the third floor of Payon Dungeon","85007|85008|85009|85010","Munak|Bongun|Magnolia|Hydra","30|50|15|15",5000,200000,17000000,"7539|1");
+		case 4:	callfunc("F_HuntGen","payon_cave4","the forth floor of Payon Dungeon","85011|85012|85013","Sohee|Soldier Skeleton|Greatest General","50|20|1",5000,350000,175000,"7539|1");
+		case 5:	callfunc("F_HuntGen","payon_cave5","the fifth floor of Payon Dungeon","85014|85015|85016|85017","Sohee|Soldier Skeleton|Archer Skeleton|Moonlight Flower","50|15|15|1",10000,500000,250000,"7539|1");
+		case 6: callfunc("F_HuntGen","prt_sewb1","the first floor of Culverts Dungeon","85018|85019|85020|85021","Familiar|Spore|Tarou|Thief Bug","10|10|10|10",2000,25000,15000,"7539|1");
+		case 7: callfunc("F_HuntGen","prt_sewb2","the second floor of Culverts Dungeon","85022|85023|85024|85025","Familiar|Tarou|Thief Bug|Female Thief Bug","20|20|20|20",5000,115000,65000,"7539|1");
+		case 8: callfunc("F_HuntGen","prt_sewb3","the third floor of Culverts Dungeon","85026|85027","Poporing|Female Thief Bug","40|40",5000,120000,75000,"7539|1");
+		case 9: callfunc("F_HuntGen","prt_sewb4","the fourth floor of Culverts Dungeon","85028|85029|85030|85031","Male Thief Bug|Cramp|Drainliar|Golden Thief Bug","50|10|25|1",5000,30000,195000,"7539|1");
+		case 10: callfunc("F_HuntGen","moc_pryd01","the first floor of Pyramids Dungeon","85032|85033|85034","Spore|Poporing|Familiar","25|25|40",5000,30000,195000,"7539|1");
+		case 11: callfunc("F_HuntGen","moc_pryd02","the second floor of Pyramids Dungeon","85035|85036","Archer Skeleton|Skeleton Soldier","50|50",5000,110000,75000,"7539|1");
+		case 12: callfunc("F_HuntGen","moc_pryd03","the third floor of Pyramids Dungeon","85037|85038|85039|85040","Verit|Mummy|Matyr|Mimic","25|50|25|25",25000,30000,195000,"7539|1");
+		case 13: callfunc("F_HuntGen","moc_pryd04","the fourth floor of Pyramids Dungeon","85041|85043|85043|85044|85045","Isis|Ghoul|Mummy|Matyr|Osiris","50|30|30|30|1",25000,3500000,2095000,"7539|1");
+		default:	dispbottom "No available quests in this map.";
+	}
+	end;
+OnInit:
+	bindatcmd "quest",strnpcinfo(3)+"::OnHuntList";	
+	//maps with quests in them
+	setarray .quest_maps$[1],
+				"pay_dun00","pay_dun01","pay_dun02","pay_dun03","pay_dun04",			//payon - 5
+				 "prt_sewb1","prt_sewb2","prt_sewb3","prt_sewb4",				//prontera- culverts - 4
+				 "moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04","moc_pryd05","moc_pryd06",	// morroc - 6
+				 "in_sphinx1","in_sphinx2","in_sphinx3","in_sphinx4","in_sphinx5",		// morroc - 5
+				 "gl_prison","gl_prison1","gl_knt01","gl_knt02",				//glast heim - geffen - 4
+				 "gef_dun01","gef_dun02","gef_dun03",						//geffen tower - geffen - 3
+				 "orcsdun01","orcsdun02",							//orc dungeon - geffen - 2
+				 "xmas_dun01","xmas_dun02",							//toy factory - lutie - 2
+				 "iz_dun01","iz_dun02","iz_dun03","iz_dun04",					//byalan dungeon - izlude - 4
+				 "treasure01","treasure02",							//sunken ship - alberta - 2
+				 "anthell01","anthell02",							//ant hell - morrocc - 2
+				 "mjo_dun01","mjo_dun02","mjo_dun03",						//coal mines - geffen - 2
+				 "alde_dun02","c_tower3";							//clock tower - aldebaran - 2
+			 
+	.quest_maps = getarraysize(.quest_maps$);	
+	end;
+}

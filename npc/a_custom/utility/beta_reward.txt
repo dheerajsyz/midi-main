@@ -1,0 +1,25 @@
+payon_mem,103,103,5	script	Beta Rewards	10179,{
+
+	if(BaseLevel < 70){
+		mes "[ Beta Rewards ]";
+		mes "You need to be at least level 70 to claim these rewards.";
+		close;
+	}
+
+	if(!#beta_reward){
+		.@i = rand(.gear_count);
+		getitembound .random_headgear[.@i],1,1;
+		set #beta_reward,1;
+		dispbottom "You gained 10,000 CASH POINTS";
+		#CASHPOINTS += 10000;
+	}
+	end;
+	
+	OnInit:
+		setarray .random_headgear,19724,19728,19729,19727,19744,19745,19750,19765,19823,19859,19860,19922,19934,19953;
+		setarray .gear_count,getarraysize(.random_headgear);
+
+		waitingroom "Beta Rewards",0;
+	end;
+
+}

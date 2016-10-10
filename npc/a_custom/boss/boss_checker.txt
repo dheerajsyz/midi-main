@@ -1,0 +1,175 @@
+-	script	Boss Checker	-1,{
+
+	getmapxy(.@mapname$,.@x,.@y,UNITTYPE_NPC);
+	if(.@mapname$ == "pay_dun04")
+		set .@mob$,strmobinfo(1,1150);
+	else if(.@mapname$ == "moc_pryd04")
+		set .@mob$,strmobinfo(1,1038);
+	else if(.@mapname$ == "pay_fild10")
+		set .@mob$,strmobinfo(1,1115);
+	else if(.@mapname$ == "prt_maze03" || .@mapname$ == "gl_cas02")
+		set .@mob$,strmobinfo(1,1039);
+	else if(.@mapname$ == "gef_dun02")
+		set .@mob$,strmobinfo(1,1046);
+	else if(.@mapname$ == "gef_dun03")
+		set .@mob$,strmobinfo(1,1389);
+	else if(.@mapname$ == "in_sphinx5")
+		set .@mob$,strmobinfo(1,1157);
+	else if(.@mapname$ == "anthell01" )
+		set .@mob$,strmobinfo(1,1159);
+	else if(.@mapname$ == "anthell02" )
+		set .@mob$,strmobinfo(1,1147);
+	else if(.@mapname$ == "mjolnir_05")
+		set .@mob$,strmobinfo(1,1059);
+	else if(.@mapname$ == "prt_sewb4")
+		set .@mob$,strmobinfo(1,1086);
+	else if(.@mapname$ == "gl_chyard")
+		set .@mob$,strmobinfo(1,1272);
+	else if(.@mapname$ == "xmas_fild01")
+		set .@mob$,strmobinfo(1,1252);
+	else if(.@mapname$ == "xmas_dun02")
+		set .@mob$,strmobinfo(1,1251);
+	else if(.@mapname$ == "niflheim")
+		set .@mob$,strmobinfo(1,1373);
+	else if(.@mapname$ == "treasure02")
+		set .@mob$,strmobinfo(1,1112);
+	else if(.@mapname$ == "tur_dun04")
+		set .@mob$,strmobinfo(1,1312);
+	else if(.@mapname$ == "yuno_fild02")
+		set .@mob$,strmobinfo(1,1388);
+	else if(.@mapname$ == "ama_dun03")
+		set .@mob$,strmobinfo(1,1492);
+	else if(.@mapname$ == "gef_fild14")
+		set .@mob$,strmobinfo(1,1087);
+	else
+		set .@mob$,strmobinfo(1,1002);
+		
+	mes "[ Boss Checker ]";
+	if (mobcount(.@mapname$, .@mob$+"#boss::OnMVPDead") > 0) {
+		mes "^008000"+.@mob$+" is alive! ^000000";
+		close;
+	} 
+	else {
+		mes "^FF0000 "+.@mob$+" is dead. ^000000";
+		close;
+	}
+
+}
+
+pay_dun04,185,47,4	duplicate(Boss Checker)	Moonlight Flower#MF	494
+xmas_dun02,134,125,4	duplicate(Boss Checker)	Stormy Knight#SK	494
+xmas_fild01,75,239,4	duplicate(Boss Checker)	Garm#GRM	494
+gl_chyard,17,155,4	duplicate(Boss Checker)	Dark Lord#DL	494
+gl_cas02,110,193,4	duplicate(Boss Checker)	Baphomet#BPH1	494
+prt_maze03,178,91,4	duplicate(Boss Checker)	Baphomet#BPH2	494
+prt_sewb4,94,90,4	duplicate(Boss Checker)	Golden Thief Bug#GTB	494
+mjolnir_05,238,28,4	duplicate(Boss Checker)	Mistress#MST	494
+gef_dun02,113,129,4	duplicate(Boss Checker)	Doppelganger#DPL	494
+gef_dun03,194,206,4	duplicate(Boss Checker)	Dracula#DRA	494
+anthell01,44,259,4	duplicate(Boss Checker)	Phreeoni#PHR	494
+anthell02,167,165,4	duplicate(Boss Checker)	Maya#MAY1	494
+anthell02,42,261,4	duplicate(Boss Checker)	Maya#MAY2	494
+in_sphinx5,103,103,4	duplicate(Boss Checker)	Pharaoh#PHA	494
+pay_fild10,86,331,4	duplicate(Boss Checker)	Eddga#EDG	494
+moc_pryd04,22,182,4	duplicate(Boss Checker)	Osiris#OSI1	494
+moc_pryd04,182,174,4	duplicate(Boss Checker)	Osiris#OSI2	494
+moc_pryd04,175,18,4	duplicate(Boss Checker)	Osiris#OSI3	494
+moc_pryd04,17,24,4	duplicate(Boss Checker)	Osiris#OSI4	494
+ama_dun03,114,28,4	duplicate(Boss Checker)	Samurai Specter#INC	494
+orcsdun02,27,179,4	duplicate(Boss Checker)	Orc Lord#OL1	494
+orcsdun02,179,25,4	duplicate(Boss Checker)	Orc Lord#OL2	494
+gef_fild14,359,223,4	duplicate(Boss Checker)	Orc Hero#OH	494
+tur_dun04,106,183,4	duplicate(Boss Checker)	Turtle General#TG	494
+treasure02,107,31,4	duplicate(Boss Checker)	Drake#DRK	494
+moc_pryd06,184,7,4	duplicate(Boss Checker)	Amon Ra#RA	494
+
+-	script	Convex	-1,{
+	
+	mes "[ ^9d3ad3 Mysterious Magician ^000000 ]";
+	mes "I can show you a list of MVPs.";
+	mes "However you must pay me "+.pay$+".";
+	mes "VIPs can check for free.";
+	menu "View MVPs",-;
+	if(getgroupid() < 5 && Zeny < .zeny_fee){ next; mes "[ ^9d3ad3 Mysterious Magician ^000000 ]"; mes "You don't have enough zeny for this."; close; end; }
+	next;
+	mes "[ ^9d3ad3 Mysterious Magician ^000000 ]";
+		if (mobcount(.bapho_map$[0], .baphomet$[0]+"#boss1::OnMVPDead") > 0){
+			mes "^008000"+.baphomet$[0]+" is alive! ^000000 - Glast Heim";
+		}
+		else
+			mes "^FF0000"+.baphomet$[.@i]+" is dead. ^000000 - Glast Heim";
+		if (mobcount(.bapho_map$[1], .baphomet$[1]+"#boss2::OnMVPDead") > 0){
+			mes "^008000"+.baphomet$[1]+" is alive! ^000000 - Hidden Dungeon";
+		}
+		else
+			mes "^FF0000"+.baphomet$[.@i]+" is dead. ^000000 - Labyrinth";
+	for(set .@i,0;.@i < getarraysize(.boss_map$); .@i++){
+		if (mobcount(.boss_map$[.@i], .boss_mob$[.@i]+"#boss::OnMVPDead") > 0) {
+			mes "^008000"+.boss_mob$[.@i]+" is alive! ^000000";
+		}
+		else {
+			mes "^FF0000"+.boss_mob$[.@i]+" is dead. ^000000";
+		}
+	}
+	if(getgroupid() < 5){
+	Zeny -= .zeny_fee;
+	}
+close;
+
+OnInit:
+setarray .boss_map$,"pay_dun04",
+					"xmas_dun02",
+					"xmas_fild01",
+					"gl_chyard",
+					"prt_sewb4",
+					"mjolnir_05",
+					"gef_dun02",
+					"gef_dun03",
+					"anthell01",
+					"anthell02",
+					"in_sphinx5",
+					"pay_fild10",
+					"moc_pryd04",
+					"ama_dun03",
+					"orcsdun02",
+					"gef_fild14",
+					"tur_dun04",
+					"treasure02",
+					"moc_pryd06";
+setarray .boss_mob$,"Moonlight Flower",
+					"Stormy Knight",
+					"Garm",
+					"Dark Lord",
+					"Golden Thief Bug",
+					"Mistress",
+					"Doppelganger",
+					"Dracula",
+					"Phreeoni",
+					"Maya",
+					"Pharaoh",
+					"Eddga",
+					"Osiris",
+					"Samurai Specter",
+					"Orc Lord",
+					"Orc Hero",
+					"Turtle General",
+					"Drake",
+					"Amon Ra";
+setarray .baphomet$,"Baphomet",
+					"Baphomet";
+setarray .bapho_map$,"gl_cas02",
+					"prt_maze03";
+	
+	set .zeny_fee,10000;
+	set .pay$,"^FF0000" + callfunc("F_InsertComma",.zeny_fee) + "z^000000"; 
+end;
+
+}
+
+prontera,165,85,5	duplicate(Convex)	Mysterious Magician#prt	650
+geffen,111,65,5	duplicate(Convex)	Mysterious Magician#gef	650
+aldebaran,131,113,5	duplicate(Convex)	Mysterious Magician#alde	650
+alberta,31,244,5	duplicate(Convex)	Mysterious Magician#alb	650
+payon,64,117,5	duplicate(Convex)	Mysterious Magician#pay	650
+morocc,170,86,5	duplicate(Convex)	Mysterious Magician#moc	650
+sec_in02,177,177,4	duplicate(Convex)	Mysterious Magician#vip	650

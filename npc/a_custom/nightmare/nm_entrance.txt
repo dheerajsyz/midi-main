@@ -1,0 +1,19 @@
+pay_dun04,120,121,0	script	Nightmare Entrance	111,{
+mes "[ Nightmare Entrance ]";
+for(.@i = 1; .@i < 6; .@i++){
+	if(getd("payon_cave"+.@i) != 1){
+		.@missing = 1;
+		break;
+	}
+}
+if(.@missing == 1){
+	mes "You are not strong enough, Adventurer.";
+	close;
+	end;
+}
+mes "Do you wish to enter the Payon Nightmare Dungeon?";
+menu "Yes",-;
+close2;
+warp "payon_mem",0,0;
+end;
+}

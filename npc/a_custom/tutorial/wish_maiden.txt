@@ -1,0 +1,157 @@
+-	script	IntroEffects	-1,{
+end;
+OnPCLoginEvent:
+	if(!nov_start && strcharinfo(3) == "didymos1"){
+		pcblockmove getcharid(3),1;
+		sc_start SC_BLIND,4000,1; //4 seconds blind
+		message strcharinfo(0),"You wake up in a strange daze...";
+		sleep2 7000;
+		message strcharinfo(0),"After the initial confusion, you begin to orient yourself with the new environment...";
+		sleep2 3000;
+		message strcharinfo(0),"What is this place? You asked yourself...And it feels like a weight was suddenly lifted...";
+		pcblockmove getcharid(3),0;
+		nov_start = 1;
+		end;
+	}
+}
+
+didymos1,79,328,5	script	Guardian#aiora_1	403,{
+	mes "[ Guardian ]";
+	mes "Halt Mortal!";
+	mes "The realm beyond is for those who have the will to survive.";
+	next;
+	mes "[ Guardian ]";
+	mes "However, I do sense potential in you.";
+	mes "Speak thou your name, Mortal.";
+	input .@name$;
+	if(.@name$ != strcharinfo(0)){
+		next;
+		mes "[ Guardian ]";
+		mes "Are you making a fool of myself?";
+		mes "I sense you are not who you said to be.";
+		close;
+		end;
+	}
+	next;
+	mes "[ Guardian ]";
+	mes "It was foretold long ago that a lone Adventurer";
+	mes "will come up to this place and shed light to the forsaken lands below";
+	next;
+	mes "[ Guardian ]";
+	mes "Tell me, "+strcharinfo(0)+"...";
+	mes "What is it that you desire the most?";
+	switch(select("Power:Wealth:Fame:Growth")){
+		case 1:
+			next;
+			mes "[ Guardian ]";
+			mes "So, you wish to become powerful?";
+			mes "Remember however, power is not everything in this world.";
+			mes "Alright then, I shall grant your bid for power.";
+			set .@wish,1;
+			break;
+		case 2:
+			next;
+			mes "[ Guardian ]";
+			mes "Wealth you say?";
+			mes "I dare say that is a fleeting moment, I am disappointed.";
+			mes "Such depravity, however, I shall still grant what you desire.";
+			set .@wish,2;
+			break;
+		case 3:
+			next;
+			mes "[ Guardian ]";
+			mes "You wish for Fame?!";
+			mes "Outrageous! So you only want to descend upon the world to become famous?!";
+			mes "Do not worry, I shall grant you fame.";
+			set .@wish,3;
+			break;
+		case 4:
+			next;
+			mes "[ Guardian ]";
+			mes "Yes, Growth, is the most essential to all.";
+			mes "I admire your wish and so I shall grant it.";
+			mes "I expect great things from you, "+strcharinfo(0);
+			set .@wish,4;
+			break;
+	}
+	switch(.@wish){
+		case 1:
+			next;
+			mes "[ Guardian ]";
+			mes "Since you wished for ^ff0000Power^000000, here is something.";
+			mes "May it aid you in your future struggles ahead.";
+			getitem2 1107,1,1,4,0,0,0,0,0;
+			break;
+		case 2:
+			next;
+			mes "[ Guardian ]";
+			mes "Since you wished for ^ff0000Wealth^000000, here is something.";
+			mes "May it aid you in your future struggles ahead.";
+			Zeny += 5000;
+			dispbottom "The Guardian filled your pockets with Zeny...";
+			break;
+		case 3:
+			next;
+			mes "[ Guardian ]";
+			mes "Since you wished for ^ff0000Fame^000000, here is something.";
+			mes "May it aid you in your future struggles ahead.";
+			announce strcharinfo(0)+" has chosen Fame. May the Light always shine upon their Adventure.",0;
+			break;
+		case 4:
+			next;
+			mes "[ Guardian ]";
+			mes "Since you wished for ^ff0000Growth^000000, here is something.";
+			mes "May it aid you in your future struggles ahead.";
+			BaseLevel += 4;
+			JobLevel += 3;
+			break;
+	}
+	next;
+	mes "[ Guardian ]";
+	mes "Now go forward to your ^ff0000Destiny^000000";
+	mes "May the Light of the All Father shine upon you always.";
+	close2;
+	savepoint "didymos1",83,124;
+	warp "didymos1",83,124;
+	end;
+}
+
+didymos1,68,309,0	script	Valkyrie Spirit#0	111,25,0,{
+	end;
+OnTouch:
+	if(valkyrie > 3) end;
+	specialeffect2 882;
+	message strcharinfo(0),"[ Valkyrie ]: Evil has threatened it, arise warrior and answer our calls!";
+	set valkyrie,4;
+end;
+}
+
+didymos1,68,273,0	script	Valkyrie Spirit#1	111,25,0,{
+	end;
+OnTouch:
+	if(valkyrie > 1) end;
+	specialeffect2 882;
+	message strcharinfo(0),"[ Valkyrie ]: This sanctuary, Aiora...";
+	set valkyrie,2;
+end;
+}
+
+didymos1,68,291,0	script	Valkyrie Spirit#2	111,25,0,{
+	end;
+OnTouch:
+	if(valkyrie > 2) end;
+	specialeffect2 882;
+	message strcharinfo(0),"[ Valkyrie ]: Is our pride and joy... but Alas...!";
+	set valkyrie,3;
+end;
+}
+
+didymos1,68,255,0	script	Valkyrie Spirit#3	111,25,0,{
+	end;
+OnTouch:
+	if(valkyrie > 0) end;
+	specialeffect2 882;
+	message strcharinfo(0),"[ Valkyrie ]: Long ago, we have committed on protecting...";
+	set valkyrie,1;
+end;
+}

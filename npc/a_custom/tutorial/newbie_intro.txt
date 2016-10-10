@@ -1,0 +1,48 @@
+didymos1,97,124,5	script	Riko Suminoe#intro	641,{
+
+	if(novice_quest > 0) goto OnTalkAlready;
+
+	mes "[ ^9d3ad3Riko Suminoe^000000 ]";
+	mes "Welcome to ^ff0000Aiora^000000 ";
+	mes "Here you will receive instructions from others~";
+	mes "They will guide you on how things work~ Usually~";
+	next;
+	mes "[ ^9d3ad3Riko Suminoe^000000 ]";
+	mes "Starting off, you will see NPCs with ^ff0000Quests^000000";
+	mes "with ^ff0000Quest Emoticons^000000 on them, so they should be easy to spot.";
+	mes "As you have noticed, I too had them but when you talk to me, it disappeared.";
+	mes "That means you have ^ff0000accepted^000000 the quest or have ^ff0000already finished^000000 the quest.";
+	next;
+	mes "[ ^9d3ad3Riko Suminoe^000000 ]";
+	mes "So far that's how ^ff0000Quests^000000 normally work.";
+	mes "I hope you learned something while talking with me";
+	mes "Here's some potion. You'll need it later.";
+	
+	getitembound 569,30,1;
+	set novice_quest,novice_quest + 1;
+	setquest 81000;
+	completequest 81000;
+
+	specialeffect2 EF_INCAGILITY;
+	sc_start SC_INCREASEAGI,1400000,10;
+	
+	close;
+	end;
+	
+	OnTalkAlready:
+	
+		mes "[ ^9d3ad3Riko Suminoe^000000 ]";
+		mes "Welcome back "+strcharinfo(0);
+		mes "Be sure to explore the map okay?~";
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,1400000,10;
+		close;
+	
+	end;
+	
+	OnInit:
+	
+		questinfo 81000,1,2;
+		
+	end;
+}

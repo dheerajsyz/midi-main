@@ -1,0 +1,83 @@
+didymos1,294,106,5	script	Healer#quest	10173,{
+
+	mes .name$;
+	mes "Welcome to ^9d3ad3Aiora^000000 stranger.";
+	mes "I am a priestess that travels the world and heal the sick.";
+	menu "OMG it's a loli!!! *Drools*",OnShy,"I see, how does your power work?",OnContinue;
+	
+OnContinue:
+	
+	if(healer_done == 1) goto OnDoneQuest;
+	
+	next;
+	mes .name$;
+	mes "I am a ^ff0000Healer^000000";
+	mes "I can ^ff0000Heal^000000 your wounds for free.";
+	mes "As I am traveling the whole world, you might see me in towns, please don't hesitate to approach me at any time.";
+	next;
+	mes .name$;
+	mes "Well, that is it for me.";
+	emotion e_flash;
+	percentheal -80,-80;
+	next;
+	mes .name$;
+	mes "Here's some exp to get you started?";
+	
+	if(Hp != MaxHp || Sp != MaxSp){
+		specialeffect 12;	sleep2 200;
+		specialeffect2 313;	percentheal 100,100;	emotion e_wasp;
+		soundeffect "wow.wav",0;
+	}
+	
+		getexp .quest_bexp,.quest_jexp;
+		set healer_done,1;
+		setquest 80003,getcharid(0);
+		completequest 80003,getcharid(0);
+		
+	close;
+
+	end;
+	
+OnShy:
+	next;
+	mes .name$;
+	mes "W-w-who are you calling a loli?!";
+	mes "Do you expect me to call you ^ff0000" + (Sex?"Onii-chan.":"Onee-chan") + "^000000?";
+	mes "Hmmmpf, don't get ahead of your self. You're a thousand years too young.";
+	menu "Then I'll come back for you later little girl~",-,"So how does your power work?",OnContinue;
+	if(Sex == 1)
+		soundeffect "fuckyou.wav",0;
+	percentheal -80,-80;
+	next;
+	mes .name$;
+	mes "Who are you calling a little girl huh?!";
+	mes "You want a piece of this? Huh?!";
+	next;
+	mes .name$;
+	mes "Anyways, ....";
+	emotion E_YUT1;
+	goto OnContinue;
+	
+	end;
+	
+OnDoneQuest:
+	close2;
+	if(Hp != MaxHp || Sp != MaxSp){
+		specialeffect 12;	sleep2 .HealCastTime;
+		specialeffect2 313;	percentheal 100,100;	emotion e_wasp;
+		soundeffect "wow.wav",0;
+	}
+	end;
+	
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	set .name$,"[ ^9d3ad3Healer^000000 ]";
+	questinfo 80003, 1,2;
+	
+end;
+
+}

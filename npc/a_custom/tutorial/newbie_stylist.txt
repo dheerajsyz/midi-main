@@ -1,0 +1,57 @@
+didymos1,187,124,5	script	Stylist#quest	10184,{
+
+	if(stylist_done == 1) goto OnStylistOption;
+
+	mes .name$;
+	mes "Welcome to ^9d3ad3Aiora^000000.";
+	mes "The city where ^ff0000Beauty^000000 never fades~";
+	menu "Thank you, may I ask who you are though?",-;
+	next;
+	mes .name$;
+	mes "Oh, I apologize for my rudeness.";
+	mes "You may call me ^ff0000Stylist^000000";
+	mes "You can change your ^ff0000Looks^000000 by talking to me.";
+	mes "You can also change your ^ff0000Clothes/Hair Color^000000. through me.";
+	mes "My services is not free though, you'll need a ^ff0000Stylist Membership Card^000000";
+	next;
+	mes .name$;
+	mes "You can buy a ^ff00007 Days Membership Card^000000 at our shop~";
+	mes "Well, that's it for me. Also, I'm here on vacation, so I can't provide you my services yet.";
+	next;
+	mes .name$;
+	mes "Here's a little exp for the trouble of listening to me.";
+	
+		getexp .quest_bexp,.quest_jexp;
+		set stylist_done,1;
+		setquest 80005,getcharid(0);
+		completequest 80005,getcharid(0);
+		
+	mes "Talk to everyone okay?";
+	close2;
+
+	cutin "",255;
+
+	end;
+	
+OnStylistOption:
+
+	mes .name$;
+	mes "Hello "+strcharinfo(0)+", do you need something?";
+	mes "I'm on vacation, so I can't possibly offer you my services.";
+	mes "I'm sorry.";
+	close;
+	
+	end;
+
+OnInit:
+	
+	set .quest_bexp,70;
+	set .quest_jexp,30;
+	
+	set .name$,"[ ^9d3ad3 Stylist ^000000 ]";
+	
+	questinfo 80005,1,2;
+	
+end;
+
+}

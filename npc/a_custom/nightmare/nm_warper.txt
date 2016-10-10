@@ -1,0 +1,123 @@
+-	script	NightmareInfo#main	-1,{
+	cutin "jp_medusa_f1",2;
+	mes "[ ^9d3ad3Cute Adventurer^000000 ]";
+	mes "Oh great adventurer, how is life treating you?!";
+	mes "Have you heard of the ^ff0000Nightmare Dungeons^000000?";
+	mes "Powerful creatures have taken up residence in them.";	
+	next;	
+	mes "[ ^9d3ad3Cute Adventurer^000000 ]";
+	mes "However, we can't just let everyone go inside.";
+	mes "We need to make sure that they are strong enough to proceed.";
+	mes "If you wish to enter them. You will need to finish the ^ff0000Arc Quests^000000";	
+	next;	
+	mes "[ ^9d3ad3Cute Adventurer^000000 ]";
+	mes "If you haven't joined the M.E.A.A yet, I advice you to do so.";
+	close2;
+	cutin "",255;
+	end;
+}
+
+payon_mem,121,122,5	duplicate(NightmareInfo#main)	Cute Adventuter	10099
+
+//Main M.E.A.A 
+
+//registration
+pa2_in01,41,69,5	script	Hunter	10098,{
+	cutin "jp_garm_f2",2;
+	mes "[ M.E.A.A Representative ]";
+	if(!meeahunter){
+	mes "Good day "+strcharinfo(0)+"!";
+	mes "Do you wish to know about our association?";
+		if(select("Yup, I wanna know:No, sorry.") == 2){
+			next;
+			mes "[ M.E.A.A Representative ]";
+			mes "I see, well if you feel interested, just approach me.";
+			close2;
+			cutin "",255;
+			end;
+		}
+	next;
+	mes "[ M.E.A.A Representative ]";
+	mes "Our association focuses on ^ff0000Monster Quests^000000";
+	mes "If you agree to our terms, you will receive the rights to do quests under the name of our association.";
+	next;
+	mes "[ M.E.A.A Representative ]";
+	mes "To access these quests, all you have to do is type in ^ff0000@quest^000000";
+	mes "Every dungeon have different quests, but some need to be unlocked here.";
+	next;
+	mes "[ M.E.A.A Representative ]";
+	mes "Now, I want you to sign the ^ff0000Contract^000000 here...";
+	mes "Just right your name at the bottom.";
+	input .@charname$;
+		if (.@charname$ != strcharinfo(0)) {
+			next;
+			mes "[ M.E.A.A Representative ]";
+			mes "Are you fooling with me?";
+			mes "Your ID shows a different name.";
+			close2;
+			cutin "",255;
+			end;
+		}
+	next;
+	mes "[ M.E.A.A Representative ]";
+	specialeffect2 328;
+	mes "Alright, you've signed the contract.";
+	mes "You are now a certified Association Member.";
+	set meeahunter,1;
+	setquest 99999;
+	completequest 99999;
+	close2;
+	announce strcharinfo(0)+" has joined M.E.A.A!",0;
+	cutin "",255;
+	end;
+	}
+	mes "How's life treating you adventurer?";
+	mes "Remember, you can grab reward if you can provide";
+	mes "enough required coins to redeem them.";
+	mes "These are all rare and high quality items, so be";
+	mes "sure to collect them all.";
+	close2;
+	cutin "",255;
+	end;
+
+}
+
+//fillers
+pa2_in01,36,75,3	script	Adventurer#poring_girl	10099,{
+	cutin "jp_medusa_f1",2;
+	mes "[ Adventurer ]";
+	mes "I see you've decided to join~";
+	mes "I'm together with my partner now~";
+	mes "Isn't that right Poi~poi?";
+	close2;
+	cutin "",255;
+	doevent "PoiPoi#poring_girl::OnReply";
+	end;
+}
+pa2_in01,37,75,3	script	PoiPoi#poring_girl	909,{
+	end;
+OnReply:
+	npctalk "Poringgg~";
+	soundeffect "poipoi.wav",0;
+	end;
+}
+pa2_in01,37,62,6	script	Adventurer#jp_evt	10168,{
+	cutin "jp_dux_thia02",2;
+	mes "[ Adventurer ]";
+	mes "Did you know that you can do the quests here with ^ff0000parties^000000?!";
+	mes "Be sure to look for friends to play with~";
+	mes "It will be easier to complete the quests that way.";
+	close2;
+	cutin "",255;
+	end;
+}
+payon_mem,111,168,5	script	Adventurer#lotti	714,{
+	cutin "jpn_pieris01",2;
+	mes "[ Stylish Adventurer ]";
+	mes "I heard they give out ^ff0000cute headgears^000000 here~";
+	mes "If you want to know more, try to ask inside~";
+	mes "Okay?~";
+	close2;
+	cutin "",255;
+	end;
+}

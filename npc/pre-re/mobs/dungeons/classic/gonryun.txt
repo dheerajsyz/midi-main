@@ -1,0 +1,38 @@
+//===== eAthena Script =======================================
+//= Gon Ryun Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Monster Spawns for Gon Ryun Fields and Dungeon
+//===== Additional Comments: =================================
+//=
+//============================================================
+
+//コンロンフィールド(gon_fild01)
+gon_fild01.gat,0,0,0,0	monster	Zipper Bear	1417,15,0,0,0
+gon_fild01.gat,0,0,0,0	monster	Baby Leopard	1415,10,0,0,0
+gon_fild01.gat,0,0,0,0	monster	Green Plant	1080,5,0,0,0
+gon_fild01.gat,0,0,0,0	monster	Rice Cake Boy	1409,10,0,0,0
+
+//西王母神殿(gon_dun01)
+gon_dun01.gat,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
+gon_dun01.gat,0,0,0,0	monster	Blood Butterfly	1408,10,0,0,0
+gon_dun01.gat,0,0,0,0	monster	Live Peach Tree	1410,10,0,0,0
+gon_dun01.gat,0,0,0,0	monster	Zipper Bear	1417,15,0,0,0
+
+//神仙の碁盤(gon_dun02)
+gon_dun02.gat,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
+gon_dun02.gat,0,0,0,0	monster	Baby Leopard	1415,3,0,0,0
+gon_dun02.gat,0,0,0,0	monster	Blood Butterfly	1408,15,0,0,0
+gon_dun02.gat,0,0,0,0	monster	Live Peach Tree	1410,10,0,0,0
+gon_dun02.gat,0,0,0,0	monster	Evil Cloud Hermit	1412,10,0,0,0
+
+//武凌桃源(gon_dun03)
+gon_dun03.gat,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
+gon_dun03.gat,0,0,0,0	monster	Evil Cloud Hermit	1412,15,0,0,0
+gon_dun03.gat,0,0,0,0	monster	Wicked Nymph	1416,15,0,0,0
+gon_dun03.gat,0,0,0,0	monster	Wild Ginseng	1413,10,0,0,0

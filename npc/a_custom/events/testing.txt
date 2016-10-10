@@ -1,0 +1,233 @@
+-	script	Testing123	-1,{
+OnInit:
+	//set .@monster_count,0;
+	//while(.@monster_count < 25){ //This is the wall that blocks before event starts
+	//	set .@y, 228 + .@monster_count;
+	//	monster "pvp_y_1-4",38,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnStart";
+	//	monster "pvp_y_1-4",39,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnStart";
+	//	.@monster_count++;
+	//}
+	
+	set .@monster_count, 0;
+	while(.@monster_count < 22){
+		set .@x, 40 + .@monster_count;
+		monster "pvp_y_1-4",.@x,230,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 6){
+		set .@x, 52 + .@monster_count;
+		monster "pvp_y_1-4",.@x,222,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	set .@monster_count,0;
+	while(.@monster_count < 9){
+		set .@x, 52 + .@monster_count;
+		monster "pvp_y_1-4",.@x,220,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 15){ 
+		set .@x, 48 + .@monster_count;
+		monster "pvp_y_1-4",.@x,199,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 1){
+		set .@x, 33 + .@monster_count;
+		monster "pvp_y_1-4",.@x,197,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 6){ 
+		set .@y, 192 + .@monster_count;
+		monster "pvp_y_1-4",47,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 4){
+		set .@x, 42 + .@monster_count;
+		monster "pvp_y_1-4",.@x,184,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 11){
+		set .@x, 49 + .@monster_count;
+		monster "pvp_y_1-4",.@x,184,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 7){
+		set .@y, 185 + .@monster_count;
+		monster "pvp_y_1-4",55,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 17){
+		set .@x, 48 + .@monster_count;
+		monster "pvp_y_1-4",.@x,176,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 26){
+		set .@x, 47 + .@monster_count;
+		monster "pvp_y_1-4",.@x,157,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 9){
+		set .@y, 158 + .@monster_count;
+		monster "pvp_y_1-4",52,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 13){
+		set .@x, 55 + .@monster_count;
+		monster "pvp_y_1-4",.@x,168,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	monster "pvp_y_1-4",76,168,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+	monster "pvp_y_1-4",84,167,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+	
+	set .@monster_count,0;
+	while(.@monster_count < 15){
+		set .@x, 99 + .@monster_count;
+		monster "pvp_y_1-4",.@x,159,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 37){
+		set .@y, 126 + .@monster_count;
+		monster "pvp_y_1-4",121,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 16){
+		set .@x, 104 + .@monster_count;
+		monster "pvp_y_1-4",.@x,151,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	//First Check Point
+	
+	set .@monster_count,0;
+	while(.@monster_count < 13){
+		set .@x, 94 + .@monster_count;
+		monster "pvp_y_1-4",.@x,107,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 11){
+		set .@y, 96 + .@monster_count;
+		monster "pvp_y_1-4",94,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 14){
+		set .@x, 90 + .@monster_count;
+		monster "pvp_y_1-4",.@x,87,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 5){
+		set .@y, 88 + .@monster_count;
+		monster "pvp_y_1-4",102,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 2){
+		set .@y, 98 + .@monster_count;
+		monster "pvp_y_1-4",102,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+
+	set .@monster_count,0;
+	while(.@monster_count < 9){
+		set .@y, 67 + .@monster_count;
+		monster "pvp_y_1-4",108,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 6){
+		set .@y, 54 + .@monster_count;
+		monster "pvp_y_1-4",108,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 14){
+		set .@x, 86 + .@monster_count;
+		monster "pvp_y_1-4",.@x,61,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 2){
+		set .@x, 104 + .@monster_count;
+		monster "pvp_y_1-4",.@x,61,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 34){
+		set .@x, 42 + .@monster_count;
+		monster "pvp_y_1-4",.@x,61,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 31){
+		set .@y, 30 + .@monster_count;
+		monster "pvp_y_1-4",42,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 8){
+		set .@y, 30 + .@monster_count;
+		monster "pvp_y_1-4",54,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 4){
+		set .@x, 54 + .@monster_count;
+		monster "pvp_y_1-4",.@x,38,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 5){
+		set .@y, 35 + .@monster_count;
+		monster "pvp_y_1-4",65,.@y,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+	set .@monster_count,0;
+	while(.@monster_count < 21){
+		set .@x, 46 + .@monster_count;
+		monster "pvp_y_1-4",.@x,84,"Wall",1368,1,strnpcinfo(0)+"::OnMobKill";
+		.@monster_count++;
+	}
+	
+end;
+}

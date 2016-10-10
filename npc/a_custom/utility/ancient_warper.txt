@@ -1,0 +1,207 @@
+// [ ==== rAthena =============================================== ]
+// [ = Ancient Warper                                             ]
+// [ ==== Por: ================================================== ]
+// [ = Echoes                                                     ]
+// [ ==== Actual Version: ======================================= ]
+// [ = 1.0                                                        ]
+// [ ==== Description: ========================================== ]
+// [ = 0.1: Initial version.                                      ]
+// [ = 1.0: Release version. Up to Episode 1 content.             ]
+// [ ==== Additional Comments: ================================== ]
+// [ =                                                            ]
+// [ ============================================================ ]
+-	script	AncientWarper#main	-1,{
+/* Initial Configurations */
+	//NPC Name.
+	.npc$ = "[^00557fWarper^000000]";
+	
+	//Zeny price per warp.
+	.WarpPrice = 100 * BaseLevel;
+
+	//Message error when the player doesn't know the map of the warp requested.
+	@KnownMapsError$ = "You have to know the requested map first, then I would warp you there.";
+	
+	//Message error when the player doesn't meet the quest/item/level requirements to warp to requested map.
+	@QuestMapsError$ = "I'm sorry, but you don't meet the requirements to be sent to that map. Be sure to have completed any ^ff0000Quest^000000, having the needed ^ff0000ítems^000000 in your inventory, or meet the ^ff0000Level^000000 requirements related to this map.";
+
+/* Function Declarations */
+	function ZenyCheck;
+	function KnownMaps;
+
+/* Script's Core */
+	mes .npc$;
+	mes "Current Price: ^ff0000"+.WarpPrice+"^000000";
+	mes "I'm an Arch Mage that can warp anyone to different places.";
+	mes "Do you want to go anywhere?"; 
+	next;
+	setarray .Main_Menu$,"Last Warp ( ^0000ff"+LastWarpMap$+"^000000 )","Cities","Dungeons";
+	for(.@i=0; .@i<getarraysize(.Main_Menu$); .@i++)
+		.@Main_Menu$ = .@Main_Menu$ + .Main_Menu$[.@i] + ":";
+	.@MMain_Menu = select(.@Main_Menu$)-1;
+	switch(.@MMain_Menu){
+		case 0:	/*Last Warp*/
+			if(LastWarpMap$ == ""){
+				mes .npc$;
+				mes "I don't remember warping you anywhere. Please use my services before requesting this option.";
+				emotion e_swt;
+				close;
+			}
+			ZenyCheck(.WarpPrice);	warp LastWarpMap$,LastWarpX,LastWarpY;	break;
+		case 1:	/*Cities*/
+			setarray .Cities_Menu$,	"Alberta",	// 0
+								"Aldebaran",	// 1
+								"Geffen",		// 2
+								"Izlude",		// 3
+								"Morroc",		// 4
+								"Payon",		// 5
+								"Prontera";	// 6
+			for(.@i=0; .@i<getarraysize(.Cities_Menu$); .@i++)
+				.@Cities_Menu$ = .@Cities_Menu$ + .Cities_Menu$[.@i] + ":";
+			.@CCities_Menu = select(.@Cities_Menu$)-1;
+			switch(.@CCities_Menu){
+				case 0:	/*Alberta*/	KnownMaps(#Known_Alberta,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "alberta",32,234;	break;
+				case 1:	/*Aldebaran*/	KnownMaps(#Known_Aldebaran,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "aldebaran",140,112;	break;
+				case 2:	/*Geffen*/	KnownMaps(#Known_Geffen,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "geffen",120,71;	break;
+				case 3:	/*Izlude*/	KnownMaps(#Known_Izlude,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "izlude",128,114;	break;
+				case 4:	/*Morroc*/	KnownMaps(#Known_Morroc,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "morocc",158,93;	break;
+				case 5:	/*Payon*/		KnownMaps(#Known_Payon,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "payon_mem",90,106;	break;
+				case 6:	/*Prontera*/	KnownMaps(#Known_Prontera,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "prontera",155,175;	break;
+			}
+			callfunc "LastWarp";
+			break;
+		case 2:	/*Dungeons*/
+			setarray .Dungeons_Menu$,	"Ant Hell",			// 0
+									"Byalan Island Dungeon",	// 1
+									"Clock Tower",			// 2
+									"Glast Heim",			// 3
+									"Labyrinth Forest",		// 4
+									"Mjolnir Dead Pit",		// 5
+									"Orc Dungeon",			// 6
+									"Payon Cave",			// 7
+									"Prontera Culvert",		// 8
+									"Pyramid",			// 9
+									"Sphinx",				// 10
+									"Sunken Ship",			// 11
+									"Turtle Island Dungeon";	// 12
+			for(.@i=0; .@i<getarraysize(.Dungeons_Menu$); .@i++)
+				.@Dungeon_Menu$ = .@Dungeon_Menu$ + .Dungeons_Menu$[.@i] + ":";
+			.@DDungeon_Menu = select(.@Dungeon_Menu$)-1;
+			switch(.@Dungeon_Menu$){
+				case 0:	/*Ant Hell*/	KnownMaps(#Known_AntHell,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "moc_fild04",209,328;	break;
+				case 1:	/*Byalan Island Dungeon*/	KnownMaps(#Known_Byalan,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "izlu2dun",107,50;	break;
+				case 2:	/*Clock Tower*/	KnownMaps(#Known_ClockTower,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "aldebaran",139,131;	break;
+				case 3:	/*Glast Heim*/	KnownMaps(#Known_GlastHeim,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "gef_fild06",27,304;	break;
+				case 4:	/*Labyrinth Forest*/	KnownMaps(#Known_LabyrinthForest,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "prt_fild01",136,368;	break;
+				case 5:	/*Mjolnir Dead Pit*/	KnownMaps(#Known_MjolnirDeadPit,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "mjolnir_02",79,363;	break;
+				case 6:	/*Orc Dungeon*/	KnownMaps(#Known_OrcDungeon,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "gef_fild10",65,335;	break;
+				case 7:	/*Payon Cave*/	KnownMaps(#Known_PayonCave,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "pay_arche",39,131;	break;
+				case 8:	/*Prontera Culvert*/	KnownMaps(#Known_PronteraCulvert,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "prt_fild05",274,208;	break;
+				case 9:	/*Pyramid*/	KnownMaps(#Known_Pyramid,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "moc_ruins",60,161;	break;
+				case 10:	/*Sphinx*/	KnownMaps(#Known_Sphinx,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "moc_fild19",100,99;	break;
+				case 11:	/*Sunken Ship*/	KnownMaps(#Known_SunkenShip,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "alb2trea",43,53;	break;
+				case 12:	/*Turtle Island Dungeon*/	KnownMaps(#Known_TurtleIsland,@KnownMapsError$);	ZenyCheck(.WarpPrice);	warp "tur_dun01",157,39;	break;
+			}
+			callfunc "LastWarp";
+			break;
+	}
+	end;
+
+/* Function Definitions */
+	function	ZenyCheck	{
+		if(Zeny < getarg(0)){
+			mes .npc$;
+			mes "It seems you don't have enough Zeny to use my services.";
+			emotion e_swt;
+			close;
+		}
+		set Zeny,Zeny-getarg(0);
+		specialeffect2 316;	sleep2 1500;
+		specialeffect2 317;	sleep2 500;
+		return;		
+	}
+	function	KnownMaps	{
+		if(getarg(0)) return;
+		else{
+			mes .npc$;
+			mes getarg(1);
+			emotion e_hmm;
+			close;
+		}
+		return;
+	}
+}
+// ----------------
+// -- Duplicates --
+// ----------------
+alberta,30,229,8	duplicate(AncientWarper#main)	Ancient Warper#alb	696
+aldebaran,146,118,4	duplicate(AncientWarper#main)	Ancient Warper#ald	696
+geffen,124,72,4	duplicate(AncientWarper#main)	Ancient Warper#gef	696
+izlude,130,119,4	duplicate(AncientWarper#main)	Ancient Warper#izl	696
+morocc,160,97,4	duplicate(AncientWarper#main)	Ancient Warper#mor	696
+payon_mem,107,116,4	duplicate(AncientWarper#main)	Ancient Warper#pay	696
+prontera,160,184,4	duplicate(AncientWarper#main)	Ancient Warper#prt	696
+
+// ---------------
+// -- Functions --
+// ---------------
+function	script	LastWarp	{
+	getmapxy(LastWarpMap$,LastWarpX,LastWarpY,0,strcharinfo(0));
+	return;
+}
+function	script	MapKnowledgeAnnounce	{
+	announce "[ Warper: '"+getarg(1)+"' now available to future travels! ]",bc_self,0x55ffff;
+	set getarg(0),1;
+	end;
+}
+
+// --------------
+// -- Mapflags --
+// --------------
+/*Alberta*/	alberta	mapflag	loadevent
+/*Aldebaran*/	aldebaran	mapflag	loadevent
+/*Geffen*/	geffen	mapflag	loadevent
+/*Izlude*/	izlude	mapflag	loadevent
+/*Morroc*/	morocc	mapflag	loadevent
+/*Payon*/	payon_mem	mapflag	loadevent
+/*Prontera*/	prontera	mapflag	loadevent
+/*Ant Hell*/	anthell01	mapflag	loadevent
+/*Byalan Island Dungeon*/	iz_dun00	mapflag	loadevent
+/*Clock Tower*/	c_tower1	mapflag	loadevent
+/*Glast Heim*/	glast_01	mapflag	loadevent
+/*Labyrinth Forest*/	prt_maze01	mapflag	loadevent
+/*Mjolnir Dead Pit*/	mjo_dun01	mapflag	loadevent
+/*Orc Dungeon*/	orcsdun01	mapflag	loadevent
+/*Payon Cave*/	pay_dun00	mapflag	loadevent
+/*Prontera Culvert*/	prt_sewb1	mapflag	loadevent
+/*Pyramid*/	moc_pryd01	mapflag	loadevent
+/*Sphinx*/	in_sphinx1	mapflag	loadevent
+/*Sunken Ship*/	treasure01	mapflag	loadevent
+/*Turtle Island Dungeon*/	tur_dun02	mapflag	loadevent
+
+// -------------------
+// -- Map Knowledge --
+// -------------------
+-	script	MapKnowledge	-1,{
+OnPCLoadMapEvent:
+	getmapxy(@WhichMap_Name$,@x,@y,0);
+/*Alberta*/	if(@WhichMap_Name$ == "alberta" && #Known_Alberta != 1) callfunc "MapKnowledgeAnnounce",#Known_Alberta,"Alberta";
+/*Aldebaran*/	if(@WhichMap_Name$ == "aldebaran" && #Known_Aldebaran != 1) callfunc "MapKnowledgeAnnounce",#Known_Aldebaran,"Aldebaran";
+/*Geffen*/	if(@WhichMap_Name$ == "geffen" && #Known_Geffen != 1) callfunc "MapKnowledgeAnnounce",#Known_Geffen,"Geffen";
+/*Izlude*/	if(@WhichMap_Name$ == "izlude" && #Known_Izlude != 1) callfunc "MapKnowledgeAnnounce",#Known_Izlude,"Izlude";
+/*Morroc*/	if(@WhichMap_Name$ == "morocc" && #Known_Morroc != 1) callfunc "MapKnowledgeAnnounce",#Known_Morroc,"Morroc";
+/*Payon*/	if(@WhichMap_Name$ == "payon_mem" && #Known_Payon != 1) callfunc "MapKnowledgeAnnounce",#Known_Payon,"Payon";
+/*Prontera*/	if(@WhichMap_Name$ == "prontera" && #Known_Prontera != 1) callfunc "MapKnowledgeAnnounce",#Known_Prontera,"Prontera";
+/*Ant Hell*/	if(@WhichMap_Name$ == "anthell01" && #Known_AntHell != 1) callfunc "MapKnowledgeAnnounce",#Known_AntHell,"Ant Hell";
+/*Byalan Island Dungeon*/	if(@WhichMap_Name$ == "iz_dun00" && #Known_Byalan != 1) callfunc "MapKnowledgeAnnounce",#Known_Byalan,"Byalan Island Dungeon";
+/*Clock Tower*/	if(@WhichMap_Name$ == "c_tower1" && #Known_ClockTower != 1) callfunc "MapKnowledgeAnnounce",#Known_ClockTower,"Clock Tower";
+/*Glast Heim*/	if(@WhichMap_Name$ == "glast_01" && #Known_GlastHeim != 1) callfunc "MapKnowledgeAnnounce",#Known_GlastHeim,"Glast Heim";
+/*Labyrinth Forest*/	if(@WhichMap_Name$ == "prt_maze01" && #Known_LabyrinthForest != 1) callfunc "MapKnowledgeAnnounce",#Known_LabyrinthForest,"Labyrinth Forest";
+/*Mjolnir Dead Pit*/	if(@WhichMap_Name$ == "mjo_dun01" && #Known_MjolnirDeadPit != 1) callfunc "MapKnowledgeAnnounce",#Known_MjolnirDeadPit,"Mjolnir Dead Pit";
+/*Orc Dungeon*/	if(@WhichMap_Name$ == "orcsdun01" && #Known_OrcDungeon != 1) callfunc "MapKnowledgeAnnounce",#Known_OrcDungeon,"Orc Dungeon";
+/*Payon Cave*/	if(@WhichMap_Name$ == "pay_dun00" && #Known_PayonCave != 1) callfunc "MapKnowledgeAnnounce",#Known_PayonCave,"Payon Cave";
+/*Prontera Culvert*/	if(@WhichMap_Name$ == "prt_sewb1" && #Known_PronteraCulvert != 1) callfunc "MapKnowledgeAnnounce",#Known_PronteraCulvert,"Prontera Culvert";
+/*Pyramid*/	if(@WhichMap_Name$ == "moc_pryd01" && #Known_Pyramid != 1) callfunc "MapKnowledgeAnnounce",#Known_Pyramid,"Pyramid";
+/*Sphinx*/	if(@WhichMap_Name$ == "in_sphinx1" && #Known_Sphinx != 1) callfunc "MapKnowledgeAnnounce",#Known_Sphinx,"Sphinx";
+/*Sunken Ship*/	if(@WhichMap_Name$ == "treasure01" && #Known_SunkenShip != 1) callfunc "MapKnowledgeAnnounce",#Known_SunkenShip,"Sunken Ship";
+/*Turtle Island Dungeon*/	if(@WhichMap_Name$ == "tur_dun02" && #Known_TurtleIsland != 1) callfunc "MapKnowledgeAnnounce",#Known_TurtleIsland,"Turtle Island Dungeon";
+}
