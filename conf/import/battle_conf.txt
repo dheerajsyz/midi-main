@@ -1,4 +1,4 @@
 //Additional hairstyles and dyes (RagnaHosting)
-max_hair_style: 73
+max_hair_style: 27
 max_hair_color: 251
 max_cloth_color: 489
