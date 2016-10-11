@@ -8612,6 +8612,37 @@ void battle_adjust_conf()
 #endif
 }
 
+// Parse BGM list for boss BGM system.
+void battle_read_boss_bgm(const char* w2, unsigned char type)
+{
+	int i = 0;
+	const char *p;
+	p = strtok(w2, ":");
+
+	while (p != NULL)
+	{
+		struct background_music *bgm = malloc(sizeof (struct background_music));
+		bgm->name = malloc(strlen(p)+1);
+		strcpy(bgm->name, p);
+		switch (type) {
+			case 0:
+				battle_config.boss_approach_bgm[i] = bgm;
+				break;
+			case 1:
+				battle_config.boss_kill_bgm[i] = bgm;
+				break;
+			case 2:
+				battle_config.boss_die_bgm[i] = bgm;
+				break;
+			default:
+				break;
+		}
+		i++;
+		p = strtok(NULL, ":");
+	}
+	ShowInfo("[Secret] Done reading boss BGM list.\n");
+}
+
 /*=====================================
  * Read battle.conf settings from file
  *-------------------------------------*/
@@ -8638,6 +8669,12 @@ int battle_config_read(const char* cfgName)
 				continue;
 			if (strcmpi(w1, "import") == 0)
 				battle_config_read(w2);
+			else if (strcmpi(w1, "boss_approach_bgm") == 0)
+				battle_read_boss_bgm(w2, 0);
+			else if (strcmpi(w1, "boss_kill_bgm") == 0)
+				battle_read_boss_bgm(w2, 1);
+			else if (strcmpi(w1, "boss_die_bgm") == 0)
+				battle_read_boss_bgm(w2, 2);
 			else if
 				(battle_set_value(w1, w2) == 0)
 				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);

@@ -131,6 +131,11 @@ bool is_infinite_defense(struct block_list *target, int flag);
 #define MIN_BODY_STYLE battle_config.min_body_style
 #define MAX_BODY_STYLE battle_config.max_body_style
 
+struct background_music
+{
+	const char* name;
+};
+
 extern struct Battle_Config
 {
 	int warp_point_debug;
@@ -614,6 +619,9 @@ extern struct Battle_Config
 	int block_account_in_same_party;
 
 #include "../custom/battle_config_struct.inc"
+	struct background_music *boss_approach_bgm[MAX_BOSSBGM];
+	struct background_music *boss_kill_bgm[MAX_BOSSBGM];
+	struct background_music *boss_die_bgm[MAX_BOSSBGM];
 } battle_config;
 
 void do_init_battle(void);

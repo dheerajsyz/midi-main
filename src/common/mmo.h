@@ -47,7 +47,7 @@
 	// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
 	#define MAX_HOTKEYS 38
 #endif
-
+#define MAX_BOSSBGM 255 // Max BGM for Boss BGM system [Secret]
 #define MAX_MAP_PER_SERVER 1500 /// Increased to allow creation of Instance Maps
 #define MAX_INVENTORY 100 ///Maximum items in player inventory
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
