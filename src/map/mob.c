@@ -2848,6 +2848,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
 			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 		}
+		if (mvp_sd && md && !md->state.npc_killmonster && status_bl_has_mode(md, MD_STATUS_IMMUNE)) {
+			struct background_music *bgm;
+			do {
+				int index = rnd() % MAX_BOSSBGM;
+				bgm = battle_config.boss_die_bgm[index];
+			} while (bgm == NULL);
+			clif_playBGM(sd, bgm->name);
+		}
 	}
 
 	if(md->deletetimer != INVALID_TIMER) {

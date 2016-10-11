@@ -1757,7 +1757,16 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			if( (bg = bg_team_search(sd->bg_id)) != NULL && bg->die_event[0] )
 				npc_event(sd, bg->die_event, 0);
 		}
-
+		if (src && src->type == BL_MOB) {
+			if (status_bl_has_mode(src, MD_STATUS_IMMUNE)) { // A boss killed a player. Play a BGM. [Secret]
+				struct background_music *bgm;
+				do {
+					int index = rnd() % MAX_BOSSBGM;
+					bgm = battle_config.boss_kill_bgm[index];
+				} while (bgm == NULL);
+				clif_playBGM(sd, bgm->name);
+			}
+		}
 		npc_script_event(sd,NPCE_DIE);
 	}
 

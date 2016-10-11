@@ -1454,6 +1454,18 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(&md->bl,423,AREA);
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect(&md->bl,421,AREA);
+			/*if (status_bl_has_mode(bl, MD_STATUS_IMMUNE)) { // Select a random BGM from config then play it. [Secret]
+				struct background_music *bgm;
+				do {
+					int index = rnd() % MAX_BOSSBGM;
+					bgm = battle_config.boss_approach_bgm[index];
+				} while (bgm == NULL);
+				unsigned char bgmbuf[128];
+				memset(bgmbuf, 0, packet_len(0x7fe));
+				WBUFW(bgmbuf, 0x7fe);
+				safestrncpy((char*)WBUFP(bgmbuf, 2), bgm->name, NAME_LENGTH);
+				clif_send(bgmbuf, packet_len(0x7fe), bl, AREA);
+			}*/
 		}
 		break;
 	case BL_NPC:
@@ -4589,6 +4601,14 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 						clif_monster_hp_bar(md, sd->fd);
 			}
 #endif
+			if (status_bl_has_mode(bl, MD_STATUS_IMMUNE)) {
+				struct background_music *bgm;
+				do {
+					int index = rnd() % MAX_BOSSBGM;
+					bgm = battle_config.boss_approach_bgm[index];
+				} while (bgm == NULL);
+				clif_playBGM(mvp_sd, bgm->name);
+			}
 		}
 		break;
 	case BL_PET:
