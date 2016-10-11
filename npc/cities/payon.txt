@@ -89,7 +89,7 @@ switch( select( "Good, send me, I'd like to see it.","Nooo, I don't wanna!" ) )
 // Warps
 //############################################################################################################################################################
 
-payon_mem,17,151,0	warp	oldpay00	1,1,pay_gld,370,149
+//payon_mem,17,151,0	warp	oldpay00	1,1,pay_gld,370,149
 payon_mem,111,173,0	warp	oldpay01	1,2,pa2_in01,15,68	
 payon_mem,133,81,0	warp	oldpay02	2,2,pa2_in01,134,171	
 payon_mem,141,91,0	warp	oldpay03	2,2,pa2_in01,98,173	
