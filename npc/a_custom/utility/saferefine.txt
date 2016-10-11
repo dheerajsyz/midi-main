@@ -1,0 +1,281 @@
+//===== rAthena Script ======================================= 
+//= Safe Refining NPCs
+//===== By: ==================================================
+//= Hanashi
+//===== Current Version: =====================================
+//= 3.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= same function as Refiner
+//===== Additional Comments: =================================
+//= doesnt break weapons or armor
+//= added manual and automatic transmission
+//============================================================
+pa2_in01,85,19,8	script	Wayland	63,{
+callfunc "saferefine","Wayland",0;
+	end;
+}
+//============================================================
+function	script	saferefine	{
+	disable_items;
+	.@npc_name$ = getarg(0);
+	mes "["+ .@npc_name$ +"]";
+	mes "Hello ^0000FF"+strcharinfo(0)+"^000000!";
+	mes "I'm the Refiner the same as the other guy";
+	mes "buuu-utttt! i guarantee that it is perfectly safe 100% no breaks!";
+	mes "and it only requires ^BB00CC"+getitemname(7620)+"^000000 and ^BB00CC"+getitemname(7619)+"^000000";
+	mes "and also those common materials needed in refining";
+	next;
+	mes "["+ .@npc_name$ +"]";
+	mes "so..which part do we need to refine?";
+	next;
+//=============================================================
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+	for(set .@i,1; .@i<getarraysize(.@indices); set .@i,.@i+1) {
+		if(getequipisequiped(.@indices[.@i])) {
+			set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			set .@equipped,1;
+											}
+		set .@menu$, .@menu$ + ":";
+											}
+//=============================================================	
+		if (.@equipped == 0) {
+			mes "["+ .@npc_name$ +"]";
+			mes "Great you just wasted my time talking...";
+			close;
+							}
+			set .@part, .@indices[select(.@menu$)];
+	
+		if(!getequipisequiped(.@part)){//custom check 
+			mes "["+ .@npc_name$ +"]";
+			mes "Are you blind?";
+			mes "you're not wearing anything!";
+			close;
+									}
+			//Check if the item is refinable...
+		if(!getequipisenableref(.@part)){
+			mes "["+ .@npc_name$ +"]";
+			mes "Nope! not gonna";
+			mes "refine this item at all...";
+			close;
+										}
+			//Check to see if the items is already +10
+		if(getequiprefinerycnt(.@part) >= 10){
+			mes "["+ .@npc_name$ +"]";
+			mes "I can't refine this";
+			mes "any more. This is as";
+			mes "refined as it gets!";
+			close;
+												}
+//=============================================================		
+	set .@refineitemid, getequipid(.@part); // save id of the item
+	set .@refinerycnt, getequiprefinerycnt(.@part); //save refinery count
+//=============================================================	
+	switch(getequipweaponlv(.@part)){
+		case 0: 	//Refine Armor
+		set .@material,985; //Elunium
+			break;
+		case 1: 	//Refine Level 1 Weapon
+		set .@material,1010; //Phracon
+			break;
+		case 2: 	//Refine Level 2 Weapon
+		set .@material,1011; //Emveretarcon
+			break;
+		case 3: 	//Refine Level 3 Weapon
+		set .@material,984; //Oridecon
+			break;
+		case 4: 	//Refine Level 4 Weapon
+		set .@material,984; //Oridecon
+			break;
+		case 5: 	//Refine other stuff?
+		set .@material,985; //Elunium
+			break;								
+									}
+//=============================================================
+	set .@firstmaterial,7620;
+	set .@secondmaterial,7619;
+//=============================================================	
+		mes "["+ .@npc_name$ +"]";
+		mes "To refine this I need";
+		mes "one ^003366"+getitemname(.@material)+"^000000 ,^BB00CC"+getitemname(7620)+"^000000 and ^BB00CC"+getitemname(7619)+"^000000";
+		mes "Do you really wish to continue?";
+		next;	
+		if(select("Yes:No") == 2){
+			mes "["+ .@npc_name$ +"]";
+			mes "Yeah...";
+			mes "There's no need to";
+			mes "rush. Take your time.";
+			close;
+								}
+//=============================================================
+		if((countitem(.@material))<1){
+			mes "["+ .@npc_name$ +"]";
+			mes "some required material is not in your inventory.";
+			mes "Please check again.";
+			close;
+									}
+		if((countitem(.@firstmaterial))<1){
+			mes "["+ .@npc_name$ +"]";
+			mes "some required material is not in your inventory.";
+			mes "Please check again.";
+			close;
+									}
+		if((countitem(.@secondmaterial))<1){
+			mes "["+ .@npc_name$ +"]";
+			mes "some required material is not in your inventory.";
+			mes "Please check again.";
+			close;
+									}
+//=============================================================
+		mes "["+ .@npc_name$ +"]";
+		mes "What kind of transmission you want?";
+		next;		
+		if(select("Manual:Automatic") == 2){
+//=============================================================
+			mes "["+ .@npc_name$ +"]";
+			mes "So...How many times would you like me to refine your item?";
+			next;
+			input .@refinecnt;
+//=============================================================	
+		if ((countitem(.@material)) < .@refinecnt){
+			mes "["+ .@npc_name$ +"]";
+			mes "the required material is insufficient";
+			close;
+		}
+		if ((countitem(.@firstmaterial)) < .@refinecnt){
+			mes "["+ .@npc_name$ +"]";
+			mes "the required material is insufficient";
+			close;
+		}	
+		if ((countitem(.@secondmaterial))< .@refinecnt){
+			mes "["+ .@npc_name$ +"]";
+			mes "the required material is insufficient";
+			close;
+		}	
+		while(.@refinecnt){
+//=============================================================
+		//Check to see if the items is already +10
+			if(getequiprefinerycnt(.@part) >= 10){
+				mes "["+ .@npc_name$ +"]";
+				mes "I can't refine this";
+				mes "any more. This is as";
+				mes "refined as it gets!";
+				close;
+												}
+//=============================================================
+			if (getequipisequiped(.@part) == 0) {
+				mes "["+ .@npc_name$ +"]";
+				mes "Look here... you don't have any items on...";
+				close;
+												}
+//=============================================================
+			if (getequipid(.@part) != .@refineitemid) {
+				mes "["+ .@npc_name$ +"]";
+				mes "Clang... No, but did you imagine I could be so stupid?!";
+				mes "You changed it...";
+				mes "Get out before I stun you with my Hammer!!";
+				close;
+													} 
+//=============================================================
+				mes "Clang, clang!!!";
+			if(getequippercentrefinery(.@part) <= rand(100)) {
+				delitem .@material,1;
+				delitem .@firstmaterial,1;
+				delitem .@secondmaterial,1;
+				downrefitem .@part;
+				goto Refcent;
+															}
+				delitem .@material,1;
+				delitem .@firstmaterial,1;
+				delitem .@secondmaterial,1;
+				successrefitem .@part;
+				emotion e_no1;
+					Refcent:
+						set .@refinecnt,.@refinecnt - 1;
+						}
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "All finished... Come again soon.";
+		close;
+											}
+		
+//=============================================================
+		mes "["+ .@npc_name$ +"]";
+		mes "shall we start?";
+		next;
+		if(select("Yes:No") == 2){
+			close;				
+								}
+//=============================================================		
+		Again:
+			//Check to see if the items is already +10
+			if(getequiprefinerycnt(.@part) >= 10){
+				mes "["+ .@npc_name$ +"]";
+				mes "I can't refine this";
+				mes "any more. This is as";
+				mes "refined as it gets!";
+				close;
+												}
+//=============================================================													
+			if((countitem(.@material))<1){
+			mes "["+ .@npc_name$ +"]";
+			mes "the required material is insufficient";
+			close;
+									}
+		if((countitem(.@firstmaterial))<1){
+			mes "["+ .@npc_name$ +"]";
+			mes "the required material is insufficient";
+			close;
+									}
+		if((countitem(.@secondmaterial))<1){
+			mes "["+ .@npc_name$ +"]";
+			mes "the required material is insufficient";
+			close;
+									}
+//=============================================================	
+			if (getequipisequiped(.@part) == 0) {
+				mes "["+ .@npc_name$ +"]";
+				mes "Look here... you don't have any items on...";
+				close;
+												}
+			if (getequipid(.@part) != .@refineitemid) {
+				mes "["+ .@npc_name$ +"]";
+				mes "Clang... No, but did you imagine I could be so stupid?!";
+				mes "You changed it...";
+				mes "Get out before I stun you with my Hammer!!";
+				close;
+													}
+//=============================================================													
+				mes "Clang, clang!!!";
+			if(getequippercentrefinery(.@part) <= rand(100)) {
+				delitem .@material,1;
+				delitem .@firstmaterial,1;
+				delitem .@secondmaterial,1;
+				downrefitem .@part;
+				mes "["+ .@npc_name$ +"]";
+				mes "Again?";
+				next;
+				if(select("Yes:No") == 2){
+					mes "["+ .@npc_name$ +"]";
+					mes "Thank you... Come again soon.";
+					close;				
+										}
+				goto Again;
+															}
+				delitem .@material,1;
+				delitem .@firstmaterial,1;
+				delitem .@secondmaterial,1;
+				successrefitem .@part;
+				emotion e_no1;
+				mes "["+ .@npc_name$ +"]";
+				mes "Again?";
+				next;
+				if(select("Yes:No") == 2){
+					mes "["+ .@npc_name$ +"]";
+					mes "Thank you... Come again soon.";
+					close;				
+										}
+				goto Again;
+			
+}
